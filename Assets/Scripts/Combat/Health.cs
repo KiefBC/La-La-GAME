@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Serialization;
 
 namespace Combat
@@ -7,7 +8,11 @@ namespace Combat
     {
         [SerializeField] float healthPoints = 20f;
         private Animator _animator;
-        private bool isDead = false;
+        private bool _isDead = false;
+        private CapsuleCollider _capsuleCollider;
+        private NavMeshAgent _navMeshAgent;
+        
+        public bool IsDead => _isDead;
         
         private void Start()
         {
@@ -15,6 +20,18 @@ namespace Combat
             if (_animator == null)
             {
                 Debug.LogError($"Missing Animator component on {gameObject.name}");
+            }
+            
+            _capsuleCollider = GetComponent<CapsuleCollider>();
+            if (_capsuleCollider == null && !gameObject.CompareTag("Player"))
+            {
+                Debug.LogError($"Missing CapsuleCollider component on {gameObject.name}");
+            }
+
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+            if (_navMeshAgent == null)
+            {
+                Debug.LogError($"Missing NavMeshAgent component on {gameObject.name}");
             }
         }
         
@@ -26,15 +43,15 @@ namespace Combat
                 Die();
             }
         }
-        
-        public bool IsDead => isDead;
 
         private void Die()
         {
-            if (isDead) return;
+            if (_isDead) return;
             
-            isDead = true;
+            _isDead = true;
             _animator.SetTrigger("die");
+            _capsuleCollider.enabled = false;
+            _navMeshAgent.enabled = false;
         }
     }
 }
