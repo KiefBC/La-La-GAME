@@ -6,7 +6,6 @@ namespace Movement
 {
     public class Mover : MonoBehaviour, IAction
     {
-        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
         [SerializeField] private Transform target;
         
         private NavMeshAgent _agent;
@@ -63,7 +62,7 @@ namespace Movement
             Vector3 velocity = _agent.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
             float speed = localVelocity.z;
-            _animator.SetFloat(ForwardSpeed, speed);
+            _animator.SetFloat("forwardSpeed", speed);
         }
 
         public void Cancel()

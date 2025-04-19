@@ -16,6 +16,8 @@ namespace Combat
         private Mover _mover;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
+
+        
         
         private float _timeSinceLastAttack = 0;
 
