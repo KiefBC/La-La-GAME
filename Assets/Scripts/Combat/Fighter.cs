@@ -46,6 +46,13 @@ namespace Combat
             
             if (_target == null) return;
             
+            Health targetHealth = _target.GetComponent<Health>();
+            if (targetHealth != null && targetHealth.IsDead)
+            {
+                Cancel();
+                return;
+            }
+            
             if (!GetIsInRange())
             {
                 _mover.MoveTo(_target.position);
@@ -79,6 +86,8 @@ namespace Combat
         // Animation Event
          void Hit()
         {
+            if (_target == null) return;
+            
             Health targetHealth = _target.GetComponent<Health>();
             targetHealth.TakeDamage(punchDamage);
         }
@@ -96,6 +105,7 @@ namespace Combat
 
         public void Cancel()
         {
+            _animator.SetTrigger("stopAttack");
             _target = null;
         }
     }

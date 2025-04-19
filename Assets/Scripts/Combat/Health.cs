@@ -7,7 +7,7 @@ namespace Combat
     {
         [SerializeField] float healthPoints = 20f;
         private Animator _animator;
-        private bool _isDead = false;
+        private bool isDead = false;
         
         private void Start()
         {
@@ -26,12 +26,14 @@ namespace Combat
                 Die();
             }
         }
+        
+        public bool IsDead => isDead;
 
         private void Die()
         {
-            if (_isDead) return;
+            if (isDead) return;
             
-            _isDead = true;
+            isDead = true;
             _animator.SetTrigger("die");
         }
     }
