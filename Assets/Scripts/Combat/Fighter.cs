@@ -10,9 +10,9 @@ namespace Combat
         [SerializeField] private float weaponRange = 2f;
         [SerializeField] private float timeBetweenAttacks = 2f;
         [SerializeField] private float punchDamage = 10f;
-        [SerializeField] private float turnSpeed = 50f; // Add turn speed control
-        
-        private Transform _target;
+        [SerializeField] private float turnSpeed = 50f; 
+
+        private Health _target;
         private Mover _mover;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
@@ -45,58 +45,72 @@ namespace Combat
             _timeSinceLastAttack += Time.deltaTime;
             
             if (_target == null) return;
+            if (_target.IsDead) return;
             
             if (!GetIsInRange())
             {
-                _mover.MoveTo(_target.position);
+                _mover.MoveTo(_target.transform.position);
             }
             else
             {
                 _mover.Cancel();
-                FaceTarget();
                 AttackBehaviour();
             }
         }
 
-        private void FaceTarget()
-        {
-            Vector3 direction = (_target.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x, 0, direction.z));
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * turnSpeed);
-        }
-
         private void AttackBehaviour()
         {
+            transform.LookAt(_target.transform);
             if (_timeSinceLastAttack > timeBetweenAttacks)
             {
                 // This will trigger Hit() event
-                _animator.SetTrigger("attack");
+                TriggerAttackAnimation();
                 _timeSinceLastAttack = 0;
             }
 
         }
-        
+
+        private void TriggerAttackAnimation()
+        {
+            _animator.ResetTrigger("attack");
+            _animator.SetTrigger("attack");
+        }
+
         // Animation Event
          void Hit()
         {
-            Health targetHealth = _target.GetComponent<Health>();
-            targetHealth.TakeDamage(punchDamage);
+            if (_target == null) return;
+            _target.TakeDamage(punchDamage);
         }
 
         public void Attack(CombatTarget combatTarget)
         {
             _actionScheduler.StartAction(this);
-            _target = combatTarget.transform;
+            _target = combatTarget.GetComponent<Health>();
+        }
+
+        public bool CanAttack(CombatTarget combatTarget)
+        {
+            if (combatTarget == null) return false;
+            Health targetToTest = combatTarget.GetComponent<Health>();
+            return targetToTest != null && !targetToTest.IsDead;
         }
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.position) <= weaponRange;
+            return Vector3.Distance(transform.position, _target.transform.position) <= weaponRange;
         }
 
         public void Cancel()
         {
+            StopCurrentAttack();
             _target = null;
+        }
+
+        private void StopCurrentAttack()
+        {
+            _animator.ResetTrigger("attack");
+            _animator.SetTrigger("stopAttack");
         }
     }
 }
