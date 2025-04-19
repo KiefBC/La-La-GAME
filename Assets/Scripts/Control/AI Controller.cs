@@ -3,6 +3,7 @@ using Combat;
 using UnityEngine;
 using Core;
 using Movement;
+using UnityEngine.Serialization;
 
 namespace Control
 {
@@ -10,6 +11,9 @@ namespace Control
     {
         [SerializeField] private float chaseDistance = 10f;
         [SerializeField] private float suspicionTime = 3f;
+        [SerializeField] private PatrolPath patrolPath;
+        [SerializeField] float wayPointTolerance = 1f; // Distance to waypoint
+        [SerializeField] float waypointDwellTime = 3f; // Time to wait at each waypoint
         
         private GameObject _player;
         private Fighter _fighter;
@@ -18,7 +22,9 @@ namespace Control
         private ActionScheduler _actionScheduler;
         
         private Vector3 _guardLocation; // Home location
-        private float _timeSinceLastSawPlayer = Mathf.Infinity; // Time since last saw player
+        private float _timeSinceLastSawPlayer = Mathf.Infinity;
+        private float _timeSinceArrivedAtWayPoint = Mathf.Infinity;
+        private int _currentWayPointIndex = 0;
 
         private void Awake()
         {
@@ -61,7 +67,6 @@ namespace Control
             
             if (InAttackRangeOfPlayer() && _fighter.CanAttack(_player))
             {
-                _timeSinceLastSawPlayer = 0;
                 AttackBehaviour();
             }
             else if (_timeSinceLastSawPlayer < suspicionTime)
@@ -70,15 +75,51 @@ namespace Control
             }
             else
             {
-                GuardBehaviour();
+                PatrolBehaviour();
             }
             
-            _timeSinceLastSawPlayer += Time.deltaTime;
+            UpdateTimers();
         }
 
-        private void GuardBehaviour()
+        private void UpdateTimers()
         {
-            _mover.StartMoveAction(_guardLocation);
+            _timeSinceLastSawPlayer += Time.deltaTime;
+            _timeSinceArrivedAtWayPoint += Time.deltaTime;
+        }
+
+        private void PatrolBehaviour()
+        {
+            Vector3 nextPosition = _guardLocation;
+            if (patrolPath != null)
+            {
+                if (AtWayPoint())
+                {
+                    _timeSinceArrivedAtWayPoint = 0;
+                    CycleWayPoints();
+                }
+                nextPosition = GetCurrentWayPoint();
+            }
+            
+            if (_timeSinceArrivedAtWayPoint > waypointDwellTime)
+            {
+                _mover.StartMoveAction(nextPosition);
+            }
+        }
+
+        private Vector3 GetCurrentWayPoint()
+        {
+            return patrolPath.GetWayPoint(_currentWayPointIndex);
+        }
+
+        private void CycleWayPoints()
+        {
+            _currentWayPointIndex = patrolPath.GetNextIndex(_currentWayPointIndex);
+        }
+
+        private bool AtWayPoint()
+        {
+            float distanceToWayPoint = Vector3.Distance(transform.position, GetCurrentWayPoint());
+            return distanceToWayPoint < wayPointTolerance;
         }
 
         private void SuspicionBehaviour()
@@ -89,6 +130,7 @@ namespace Control
 
         private void AttackBehaviour()
         {
+            _timeSinceLastSawPlayer = 0;
             _fighter.Attack(_player);
         }
 

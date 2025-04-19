@@ -19,13 +19,13 @@ namespace Control
             }
         }
         
-        private int GetNextIndex(int index)
+        public int GetNextIndex(int index)
         {
             if (index + 1 == transform.childCount) return 0;
             return index + 1;
         }
 
-        private Vector3 GetWayPoint(int index)
+        public Vector3 GetWayPoint(int index)
         {
             return transform.GetChild(index).position;
         }
