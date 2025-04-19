@@ -12,21 +12,36 @@ namespace Control
         [SerializeField] private float chaseDistance = 10f;
         [SerializeField] private float suspicionTime = 3f;
         [SerializeField] private PatrolPath patrolPath;
-        [SerializeField] float wayPointTolerance = 1f; // Distance to waypoint
-        [SerializeField] float waypointDwellTime = 3f; // Time to wait at each waypoint
-        
+        [SerializeField] float wayPointTolerance = 1f;
+        [SerializeField] float waypointDwellTime = 3f;
+
         private GameObject _player;
         private Fighter _fighter;
         private Health _health;
         private Mover _mover;
         private ActionScheduler _actionScheduler;
         
-        private Vector3 _guardLocation; // Home location
+        private Vector3 _guardLocation;
         private float _timeSinceLastSawPlayer = Mathf.Infinity;
         private float _timeSinceArrivedAtWayPoint = Mathf.Infinity;
         private int _currentWayPointIndex = 0;
 
+        private AIState _currentState;
+
+        private enum AIState
+        {
+            Patrol,
+            Suspicious,
+            Attack
+        }
+
         private void Awake()
+        {
+            InitializeComponents();
+            _currentState = AIState.Patrol;
+        }
+
+        private void InitializeComponents()
         {
             _player = GameObject.FindWithTag("Player");
             if (_player == null)
@@ -65,20 +80,98 @@ namespace Control
         {
             if (_health.IsDead) return;
             
-            if (InAttackRangeOfPlayer() && _fighter.CanAttack(_player))
-            {
-                AttackBehaviour();
-            }
-            else if (_timeSinceLastSawPlayer < suspicionTime)
-            {
-                SuspicionBehaviour();
-            }
-            else
-            {
-                PatrolBehaviour();
-            }
-            
+            UpdateState();
+            UpdateBehaviour();
             UpdateTimers();
+        }
+        
+        private float GetRandomDwellTime()
+        {
+            return waypointDwellTime + UnityEngine.Random.Range(-waypointDwellTime / 2, waypointDwellTime / 2);
+        }
+
+        private void UpdateState()
+        {
+            AIState newState = _currentState;
+
+            switch (_currentState)
+            {
+                case AIState.Patrol:
+                    if (InAttackRangeOfPlayer() && _fighter.CanAttack(_player))
+                    {
+                        newState = AIState.Attack;
+                    }
+                    break;
+
+                case AIState.Suspicious:
+                    if (InAttackRangeOfPlayer() && _fighter.CanAttack(_player))
+                    {
+                        newState = AIState.Attack;
+                    }
+                    else if (_timeSinceLastSawPlayer >= suspicionTime)
+                    {
+                        newState = AIState.Patrol;
+                    }
+                    break;
+
+                case AIState.Attack:
+                    if (!InAttackRangeOfPlayer() || !_fighter.CanAttack(_player))
+                    {
+                        newState = AIState.Suspicious;
+                        _timeSinceLastSawPlayer = 0;
+                    }
+                    break;
+            }
+
+            if (newState != _currentState)
+            {
+                OnStateExit(_currentState);
+                _currentState = newState;
+                OnStateEnter(_currentState);
+            }
+        }
+
+        private void UpdateBehaviour()
+        {
+            switch (_currentState)
+            {
+                case AIState.Patrol:
+                    PatrolBehaviour();
+                    break;
+                case AIState.Suspicious:
+                    SuspicionBehaviour();
+                    break;
+                case AIState.Attack:
+                    AttackBehaviour();
+                    break;
+            }
+        }
+
+        private void OnStateEnter(AIState state)
+        {
+            switch (state)
+            {
+                case AIState.Patrol:
+                    _timeSinceArrivedAtWayPoint = Mathf.Infinity; // Force immediate movement
+                    break;
+                case AIState.Suspicious:
+                    _mover.Cancel();
+                    _actionScheduler.CancelCurrentAction();
+                    break;
+                case AIState.Attack:
+                    _timeSinceLastSawPlayer = 0;
+                    break;
+            }
+        }
+
+        private void OnStateExit(AIState state)
+        {
+            switch (state)
+            {
+                case AIState.Attack:
+                    _fighter.Cancel();
+                    break;
+            }
         }
 
         private void UpdateTimers()
@@ -100,7 +193,7 @@ namespace Control
                 nextPosition = GetCurrentWayPoint();
             }
             
-            if (_timeSinceArrivedAtWayPoint > waypointDwellTime)
+            if (_timeSinceArrivedAtWayPoint > GetRandomDwellTime())
             {
                 _mover.StartMoveAction(nextPosition);
             }
