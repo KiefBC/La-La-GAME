@@ -10,7 +10,7 @@ namespace Combat
         [SerializeField] private float weaponRange = 2f;
         [SerializeField] private float timeBetweenAttacks = 2f;
         [SerializeField] private float punchDamage = 10f;
-        [SerializeField] private float turnSpeed = 50f; 
+        // [SerializeField] private float turnSpeed = 50f; 
 
         private Health _target;
         private Mover _mover;
