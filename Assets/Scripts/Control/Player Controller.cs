@@ -1,6 +1,7 @@
 using UnityEngine;
 using Movement;
 using Combat;
+using Core;
 
 namespace Control
 {
@@ -8,6 +9,7 @@ namespace Control
     {
         private Mover _mover;
         private Fighter _fighter;
+        private Health _health;
 
         void Start()
         {
@@ -22,10 +24,17 @@ namespace Control
             {
                 Debug.LogError($"Missing Fighter component on {gameObject.name}");
             }
+            
+            _health = GetComponent<Health>();
+            if (_health == null)
+            {
+                Debug.LogError($"Missing Health component on {gameObject.name}");
+            }
         }
         
         void Update()
         {
+            if (_health.IsDead) return;
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
         }
@@ -36,11 +45,13 @@ namespace Control
             foreach (RaycastHit hit in hits)
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (!_fighter.CanAttack(target)) continue;
+                if (target == null) continue;
+                
+                if (!_fighter.CanAttack(target.gameObject)) continue;
                 
                 if (Input.GetMouseButtonDown(1))
                 {
-                    _fighter.Attack(target);
+                    _fighter.Attack(target.gameObject);
                 }
                 return true;
             }

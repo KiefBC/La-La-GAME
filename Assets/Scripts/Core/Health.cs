@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Serialization;
 
-namespace Combat
+namespace Core
 {
     public class Health : MonoBehaviour
     {
@@ -11,6 +11,7 @@ namespace Combat
         private bool _isDead = false;
         private CapsuleCollider _capsuleCollider;
         private NavMeshAgent _navMeshAgent;
+        private ActionScheduler _scheduler;
         
         public bool IsDead => _isDead;
         
@@ -33,6 +34,12 @@ namespace Combat
             {
                 Debug.LogError($"Missing NavMeshAgent component on {gameObject.name}");
             }
+            
+            _scheduler = GetComponent<ActionScheduler>();
+            if (_scheduler == null)
+            {
+                Debug.LogError($"Missing ActionScheduler component on {gameObject.name}");
+            }
         }
         
         public void TakeDamage(float damage)
@@ -50,8 +57,7 @@ namespace Combat
             
             _isDead = true;
             _animator.SetTrigger("die");
-            _capsuleCollider.enabled = false;
-            _navMeshAgent.enabled = false;
+            _scheduler.CancelCurrentAction();
         }
     }
 }

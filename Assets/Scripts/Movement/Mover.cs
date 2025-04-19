@@ -12,6 +12,7 @@ namespace Movement
         private NavMeshAgent _agent;
         private Animator _animator;
         private ActionScheduler _scheduler;
+        private Health _health;
 
         private void Start()
         {
@@ -32,10 +33,18 @@ namespace Movement
             {
                 Debug.LogError($"Missing ActionScheduler component on {gameObject.name}");
             }
+            
+            _health = GetComponent<Health>();
+            if (_health == null)
+            {
+                Debug.LogError($"Missing Health component on {gameObject.name}");
+            }
         }
 
         void Update()
         {
+            _agent.enabled = !_health.IsDead;
+            
             UpdateAnimator();
         }
 
