@@ -7,6 +7,7 @@ namespace Movement
     public class Mover : MonoBehaviour, IAction
     {
         [SerializeField] private Transform target;
+        [SerializeField] private float maxSpeed = 6f; // Maximum speed of the agent
         
         private NavMeshAgent _agent;
         private Animator _animator;
@@ -51,9 +52,10 @@ namespace Movement
         /// Moves the object to the specified world position using the NavMeshAgent component.
         /// </summary>
         /// <param name="destination">The target position to move the object to.</param>
-        public void MoveTo(Vector3 destination)
+        public void MoveTo(Vector3 destination, float speedFraction)
         {
             _agent.destination = destination;
+            _agent.speed = maxSpeed * Mathf.Clamp01(speedFraction); // Clamp the speed to the range [0, 1]
             _agent.isStopped = false;
         }
 
@@ -70,10 +72,10 @@ namespace Movement
             _agent.isStopped = true;
         }
         
-        public void StartMoveAction(Vector3 destination)
+        public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             _scheduler.StartAction(this);
-            MoveTo(destination);
+            MoveTo(destination, speedFraction);
         }
     }
 }

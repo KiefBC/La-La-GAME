@@ -65,7 +65,7 @@ namespace Control
             {
                 if (Input.GetMouseButton(0))
                 {
-                    _mover.StartMoveAction(hit.point);
+                    _mover.StartMoveAction(hit.point, 1f);
                 }
                 return true;
             }

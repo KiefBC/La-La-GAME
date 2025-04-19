@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2476653486581934855, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Weak Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2476653486581934855, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_TagString
@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6551649388099521221, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Speed
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8924891248612877884, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Avatar
@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  maxSpeed: 6
 --- !u!114 &3050799053940413007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,6 +172,7 @@ MonoBehaviour:
   patrolPath: {fileID: 0}
   wayPointTolerance: 1
   waypointDwellTime: 3
+  patrolSpeedFraction: 0.305
 --- !u!4 &2402713313535711585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 546681195819758059, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}

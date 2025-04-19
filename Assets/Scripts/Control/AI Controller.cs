@@ -3,6 +3,7 @@ using Combat;
 using UnityEngine;
 using Core;
 using Movement;
+using Unity.VisualScripting;
 using UnityEngine.Serialization;
 
 namespace Control
@@ -13,7 +14,10 @@ namespace Control
         [SerializeField] private float suspicionTime = 3f;
         [SerializeField] private PatrolPath patrolPath;
         [SerializeField] float wayPointTolerance = 1f;
-        [SerializeField] float waypointDwellTime = 3f;
+        [SerializeField] float waypointDwellTime = 2f;
+        
+        [Range(0, 1)]
+        [SerializeField] private float patrolSpeedFraction = 0.1f; // Fraction of max walking speed to use when patrolling (30% of 1)
 
         private GameObject _player;
         private Fighter _fighter;
@@ -195,7 +199,7 @@ namespace Control
             
             if (_timeSinceArrivedAtWayPoint > GetRandomDwellTime())
             {
-                _mover.StartMoveAction(nextPosition);
+                _mover.StartMoveAction(nextPosition, patrolSpeedFraction);
             }
         }
 
