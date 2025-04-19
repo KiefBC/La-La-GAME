@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 047fa59aabbb742c09ee73925e047ac2, type: 2}
+    - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: punchDamage
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6551649388099521221, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Speed
       value: 3
@@ -164,6 +168,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseDistance: 10
   suspicionTime: 3
+  patrolPath: {fileID: 0}
+  wayPointTolerance: 1
+  waypointDwellTime: 3
 --- !u!4 &2402713313535711585 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 546681195819758059, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
