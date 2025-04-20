@@ -1,4 +1,5 @@
 using Core;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Combat
@@ -6,26 +7,55 @@ namespace Combat
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapon/Make New Weapon", order = 0)]
     public class Weapon : ScriptableObject
     {
-        [SerializeField] AnimatorOverrideController animatorOverride = null;
+        [Header("Animation")]
+        [SerializeField] AnimatorOverrideController playerAnimatorOverride = null;
+        [SerializeField] AnimatorOverrideController enemyAnimatorOverride = null;
+        
+        [Header("Weapon Settings")]
         [SerializeField] GameObject equippedPrefab = null;
         [SerializeField] private float weaponDamage = 5f;
         [SerializeField] private float weaponRange = 2f;
         [SerializeField] private bool isRightHanded = true;
         [SerializeField] private Projectile projectile = null;
-        // if is a ranged weapon
+
+        private const string WeaponName = "Weapon";
         
         
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
-            if (equippedPrefab == null) return; // If no prefab, do nothing
+            if (equippedPrefab == null) return;
             
-            Debug.Log("DEBUG :: Spawned weapon");
             Transform handTransform = GetTransform(rightHand, leftHand);
-            Instantiate(equippedPrefab, handTransform);
+            GameObject weapon = Instantiate(equippedPrefab, handTransform);
+            weapon.name = WeaponName;
             
-            if (animatorOverride == null) return; // If no override, do nothing
-            animator.runtimeAnimatorController = animatorOverride;
-            Debug.Log("DEBUG :: Overrided animator");
+            // Check if we should override the animator
+            AnimatorOverrideController overrideToUse = GetAnimatorOverride(animator.gameObject);
+            if (overrideToUse == null) return;
+            animator.runtimeAnimatorController = overrideToUse;
+        }
+
+        private AnimatorOverrideController GetAnimatorOverride(GameObject owner)
+        {
+            return owner.CompareTag("Player") ? playerAnimatorOverride : enemyAnimatorOverride;
+        }
+
+        private static void DestroyOldWeapon(Transform rightHand, Transform leftHand)
+        {
+            Transform oldWeapon = GetOldWeapon(rightHand, leftHand);
+            if (oldWeapon == null) return;
+            oldWeapon.name = "DESTROYING";
+            Destroy(oldWeapon.gameObject);
+        }
+
+        private static Transform GetOldWeapon(Transform rightHand, Transform leftHand)
+        {
+            Transform oldWeapon = rightHand.Find(WeaponName);
+            if (oldWeapon == null)
+            {
+                oldWeapon = leftHand.Find(WeaponName);
+            }
+            return oldWeapon;
         }
 
         private Transform GetTransform(Transform rightHand, Transform leftHand)

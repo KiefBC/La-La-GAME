@@ -14,7 +14,7 @@ namespace Combat
     
         void Update()
         {
-            if (!_target) return;
+            if (_target == null) return;
             transform.LookAt(GetAimPosition());
             transform.Translate(Vector3.forward * (projectileTravelSpeed * Time.deltaTime));
         }
@@ -22,15 +22,15 @@ namespace Combat
         public void SetTarget(Health target, float damage)
         {
             if (!target) return;
-            Debug.Log("DEBUG :: Projectile target set");
-            _target = target; // ??? TODO: See if <this> works
+            _target = target;
             _damage = damage;
+            Debug.Log($"DEBUG :: Projectile damage set to {_target.name}: {_damage}");
         }
 
         private Vector3 GetAimPosition()
         {
             CapsuleCollider targetCollider = _target.GetComponent<CapsuleCollider>();
-            if (!targetCollider) return _target.transform.position; // If no collider, just aim at the target
+            if (targetCollider == null) return _target.transform.position; // If no collider, just aim at the target
             return _target.transform.position + targetCollider.center;
         }
         
