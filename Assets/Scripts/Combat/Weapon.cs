@@ -44,7 +44,7 @@ namespace Combat
             return owner.CompareTag("Player") ? playerAnimatorOverride : enemyAnimatorOverride;
         }
 
-        private static void DestroyOldWeapon(Transform rightHand, Transform leftHand)
+        private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
         {
             Transform oldWeapon = GetOldWeapon(rightHand, leftHand);
             if (oldWeapon == null) return;

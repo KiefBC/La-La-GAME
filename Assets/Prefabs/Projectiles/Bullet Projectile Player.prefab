@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2468131146218630539, guid: b247c20ae439742adbfad3a42ba7b843, type: 3}
+      propertyPath: projectileTravelSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3371514256772333513, guid: b247c20ae439742adbfad3a42ba7b843, type: 3}
       propertyPath: m_Name
       value: Bullet Projectile Player
