@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Core
+namespace Core.Saving
 {
     public class JsonSavingSystem : MonoBehaviour
     {

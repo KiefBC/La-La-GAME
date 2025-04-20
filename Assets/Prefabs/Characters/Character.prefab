@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6316003831960963302}
   - component: {fileID: 63520528371226746}
   - component: {fileID: 796766078478184448}
+  - component: {fileID: 8736165156501447702}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -141,7 +142,6 @@ MonoBehaviour:
   weaponRange: 2
   timeBetweenAttacks: 1
   punchDamage: 10
-  turnSpeed: 20
 --- !u!114 &63520528371226746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,4 +166,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b91c8febf433c4d91b953dc0d218cd76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  healthPoints: 20
+--- !u!114 &8736165156501447702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2476653486581934855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd81f1bdc32264bbe8de7f20b21e1511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uniqueIdentifier: 

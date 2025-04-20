@@ -41,10 +41,18 @@ namespace Scene_Management
             Fader fader = FindObjectOfType<Fader>();
             
             yield return fader.FadeOut(fadeTime);
+            
+            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            savingWrapper.Save();
+            
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
+            
+            savingWrapper.Load();
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
+            
+            savingWrapper.Save();
             
             yield return new WaitForSeconds(waitTime);
             yield return fader.FadeIn(fadeTime);

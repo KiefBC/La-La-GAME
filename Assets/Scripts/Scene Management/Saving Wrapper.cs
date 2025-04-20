@@ -1,16 +1,42 @@
+using System.Collections;
 using UnityEngine;
+using Core.Saving;
 
-public class SavingWrapper : MonoBehaviour
+namespace Scene_Management
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public class SavingWrapper : MonoBehaviour
     {
+        const string saveFileName = "sav";
+        [SerializeField] private float fadeInTime = 1f;
         
-    }
+        IEnumerator Start()
+        {
+            Fader fader = FindObjectOfType<Fader>();
+            fader.FadeOutImmediate();
+            yield return GetComponent<JsonSavingSystem>().LoadLastScene(saveFileName);
+            yield return fader.FadeIn(fadeInTime);
+        }
+        
+        void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                Load();
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                Save();
+            }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        public void Load()
+        {
+            GetComponent<JsonSavingSystem>().Load(saveFileName);
+        }
         
+        public void Save()
+        {
+            GetComponent<JsonSavingSystem>().Save(saveFileName);
+        }
     }
 }

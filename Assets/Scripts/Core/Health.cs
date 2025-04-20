@@ -1,10 +1,11 @@
+using Core.Saving;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
+using Newtonsoft.Json.Linq;
 
 namespace Core
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour, IJsonSaveable
     {
         [SerializeField] float healthPoints = 20f;
         private Animator _animator;
@@ -58,6 +59,20 @@ namespace Core
             _isDead = true;
             _animator.SetTrigger("die");
             _scheduler.CancelCurrentAction();
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return JToken.FromObject(healthPoints);
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            healthPoints = state.ToObject<float>();
+            if (healthPoints <= 0)
+            {
+                Die();
+            }
         }
     }
 }

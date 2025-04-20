@@ -3,7 +3,7 @@ using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Core
+namespace Core.Saving
 {
     [ExecuteAlways]
     public class JsonSaveableEntity : MonoBehaviour
