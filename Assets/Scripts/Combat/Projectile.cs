@@ -1,4 +1,5 @@
 using Core;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -9,7 +10,10 @@ namespace Combat
         [SerializeField] private float projectileTravelSpeed = 1f;
         [SerializeField] private bool isHoming = true;
         [SerializeField] private GameObject hitEffect = null;
-    
+        [SerializeField] private float maxLifeTime = 10f;
+        [SerializeField] private GameObject[] destroyOnHit = null;
+        [SerializeField] private float lifeAfterImpact = 2f;
+            
         private Health _target = null;
         private float _damage = 0f;
     
@@ -39,6 +43,7 @@ namespace Combat
             if (!target) return;
             _target = target;
             _damage = damage;
+            Destroy(gameObject, maxLifeTime);
         }
 
         private Vector3 GetAimPosition()
@@ -53,13 +58,20 @@ namespace Combat
             if (other.GetComponent<Health>() != _target) return;
             if (_target.IsDead) return;
             _target.TakeDamage(_damage);
+
+            projectileTravelSpeed = 0;
             
             if (hitEffect != null)
             {
                 Instantiate(hitEffect, transform.position, Quaternion.identity);
             }
             
-            Destroy(gameObject);
+            foreach (GameObject obj in destroyOnHit)
+            {
+                Destroy(obj);
+            }
+            
+            Destroy(gameObject, lifeAfterImpact);
         }
     }
 }

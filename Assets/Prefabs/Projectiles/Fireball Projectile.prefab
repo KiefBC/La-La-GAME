@@ -49,6 +49,9 @@ MonoBehaviour:
   projectileTravelSpeed: 20
   isHoming: 1
   hitEffect: {fileID: 6723942672714027616, guid: 7fdbeb08ce9fd4d999748b7fd2fa3773, type: 3}
+  maxLifeTime: 10
+  destroyOnHit: []
+  lifeAfterImpact: 1
 --- !u!136 &4315572985000405391
 CapsuleCollider:
   m_ObjectHideFlags: 0
