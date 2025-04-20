@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tough Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 1028138628285915312, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2402713313535711585, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.9999999

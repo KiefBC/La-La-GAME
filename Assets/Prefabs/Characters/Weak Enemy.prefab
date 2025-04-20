@@ -60,6 +60,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2921351832138401850, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3555036433467028331, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Avatar
       value: 
@@ -69,9 +73,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: 047fa59aabbb742c09ee73925e047ac2, type: 2}
     - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: weapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 492ee0f7f3bcb4e76b0a9e1dbeac7a2e, type: 2}
+    - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: punchDamage
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: defaultWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 492ee0f7f3bcb4e76b0a9e1dbeac7a2e, type: 2}
+    - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: handtransform
+      value: 
+      objectReference: {fileID: 8761877613707755435}
     - target: {fileID: 6551649388099521221, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Speed
       value: 1
@@ -238,5 +254,10 @@ PrefabInstance:
 --- !u!4 &7469049503428503432 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cfb114c1fd1a44cf1883ce713e0d40ea, type: 3}
+  m_PrefabInstance: {fileID: 6930439004136702051}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8761877613707755435 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1852576806548013000, guid: cfb114c1fd1a44cf1883ce713e0d40ea, type: 3}
   m_PrefabInstance: {fileID: 6930439004136702051}
   m_PrefabAsset: {fileID: 0}

@@ -6,7 +6,7 @@ namespace Scene_Management
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string saveFileName = "sav";
+        const string saveFileName = "sav1";
         [SerializeField] private float fadeInTime = 1f;
         
         IEnumerator Start()
@@ -26,6 +26,10 @@ namespace Scene_Management
             if (Input.GetKeyDown(KeyCode.K))
             {
                 Save();
+            }
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                GetComponent<JsonSavingSystem>().Delete(saveFileName);
             }
         }
 

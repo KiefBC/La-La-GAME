@@ -7,21 +7,51 @@ namespace Combat
 {
     public class Fighter : MonoBehaviour, IAction
     {
-        [SerializeField] private float weaponRange = 2f;
         [SerializeField] private float timeBetweenAttacks = 2f;
-        [SerializeField] private float punchDamage = 10f;
-        // [SerializeField] private float turnSpeed = 50f; 
-
+        [SerializeField] Transform rightHandTransform = null;
+        [SerializeField] Transform leftHandTransform = null;
+        [SerializeField] private Weapon defaultWeapon = null;
+        
         private Health _target;
         private Mover _mover;
         private ActionScheduler _actionScheduler;
         private Animator _animator;
-
         
-        
-        private float _timeSinceLastAttack = 0;
+        private float _timeSinceLastAttack = Mathf.Infinity;
+        private Weapon _currentWeapon = null;
 
         private void Start()
+        {
+            InitializeComponents();
+            EquipWeapon(defaultWeapon);
+        }
+        
+        private void Update()
+        {
+            _timeSinceLastAttack += Time.deltaTime;
+            
+            if (_target == null) return;
+            if (_target.IsDead) return;
+            
+            if (!GetIsInRange())
+            {
+                _mover.MoveTo(_target.transform.position, 1f);
+            }
+            else
+            {
+                _mover.Cancel();
+                AttackBehaviour();
+            }
+        }
+
+        public  void EquipWeapon(Weapon weapon)
+        {
+            _currentWeapon = weapon;
+            Animator animator = GetComponent<Animator>();
+            weapon.Spawn(rightHandTransform, leftHandTransform, animator);
+        }
+
+        private void InitializeComponents()
         {
             _mover = GetComponent<Mover>();
             if (_mover == null)
@@ -39,24 +69,6 @@ namespace Combat
             if (_animator == null)
             {
                 Debug.LogError($"Missing Animator component on {gameObject.name}");
-            }
-        }
-
-        private void Update()
-        {
-            _timeSinceLastAttack += Time.deltaTime;
-            
-            if (_target == null) return;
-            if (_target.IsDead) return;
-            
-            if (!GetIsInRange())
-            {
-                _mover.MoveTo(_target.transform.position, 1f);
-            }
-            else
-            {
-                _mover.Cancel();
-                AttackBehaviour();
             }
         }
 
@@ -82,7 +94,22 @@ namespace Combat
          void Hit()
         {
             if (_target == null) return;
-            _target.TakeDamage(punchDamage);
+            
+            if (_currentWeapon.HasProjectile())
+            {
+                _currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, _target);
+            }
+            else
+            {
+                _target.TakeDamage(_currentWeapon.GetDamge());
+            }
+            
+        }
+         
+         // Animation Event
+         void Shoot()
+        {
+            Hit();
         }
 
         public void Attack(GameObject combatTarget)
@@ -100,7 +127,7 @@ namespace Combat
 
         private bool GetIsInRange()
         {
-            return Vector3.Distance(transform.position, _target.transform.position) <= weaponRange;
+            return Vector3.Distance(transform.position, _target.transform.position) <= _currentWeapon.GetRange();
         }
 
         public void Cancel()

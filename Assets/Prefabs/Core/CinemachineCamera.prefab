@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 2741821601186555126}
   - component: {fileID: 2054661421668406532}
   - component: {fileID: 951096883243121879}
-  - component: {fileID: 58939974598219315}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -28,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5389837576620619114}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.26318914, y: -0.0033350848, z: 0.0009098409, w: 0.9647381}
-  m_LocalPosition: {x: -16.855228, y: 8.18, z: -27.74554}
+  m_LocalRotation: {x: 0.26311705, y: -0.022817153, z: 0.0062247217, w: 0.96447396}
+  m_LocalPosition: {x: 24.32, y: 8.670189, z: -14.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -55,7 +54,7 @@ MonoBehaviour:
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
   Target:
-    TrackingTarget: {fileID: 0}
+    TrackingTarget: {fileID: 5950657630536248270, guid: 8b98707b072994845bb91188d3db21f3, type: 3}
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
@@ -122,46 +121,7 @@ MonoBehaviour:
   TargetOffset: {x: 0.09, y: 0.39, z: 0}
   Damping: {x: 0.5, y: 0.52}
   Lookahead:
-    Enabled: 0
+    Enabled: 1
     Time: 0
     Smoothing: 0
     IgnoreY: 0
---- !u!114 &58939974598219315
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5389837576620619114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbe43d662878a7c43bcd44d43c9e2094, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollideAgainst:
-    serializedVersion: 2
-    m_Bits: 1
-  IgnoreTag: 
-  TransparentLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  MinimumDistanceFromTarget: 0.3
-  AvoidObstacles:
-    Enabled: 1
-    DistanceLimit: 0
-    MinimumOcclusionTime: 0
-    CameraRadius: 0.4
-    UseFollowTarget:
-      Enabled: 0
-      YOffset: 0
-    Strategy: 0
-    MaximumEffort: 4
-    SmoothingTime: 0
-    Damping: 0.4
-    DampingWhenOccluded: 0.2
-  ShotQualityEvaluation:
-    Enabled: 0
-    OptimalDistance: 10
-    NearLimit: 5
-    FarLimit: 30
-    MaxQualityBoost: 0.2
