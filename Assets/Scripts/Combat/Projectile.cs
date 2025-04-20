@@ -1,27 +1,30 @@
 using Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Combat
 {
     public class Projectile : MonoBehaviour
     {
-        [SerializeField] private float speed = 1f;
+        [SerializeField] private float projectileTravelSpeed = 1f;
     
         private Health _target = null;
+        private float _damage = 0f;
     
     
         void Update()
         {
             if (!_target) return;
             transform.LookAt(GetAimPosition());
-            transform.Translate(Vector3.forward * (speed * Time.deltaTime));
+            transform.Translate(Vector3.forward * (projectileTravelSpeed * Time.deltaTime));
         }
         
-        public void SetTarget(Health target)
+        public void SetTarget(Health target, float damage)
         {
             if (!target) return;
             Debug.Log("DEBUG :: Projectile target set");
-            this._target = target;
+            _target = target; // ??? TODO: See if <this> works
+            _damage = damage;
         }
 
         private Vector3 GetAimPosition()
@@ -29,6 +32,13 @@ namespace Combat
             CapsuleCollider targetCollider = _target.GetComponent<CapsuleCollider>();
             if (!targetCollider) return _target.transform.position; // If no collider, just aim at the target
             return _target.transform.position + targetCollider.center;
+        }
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<Health>() != _target) return;
+            _target.TakeDamage(_damage);
+            Destroy(gameObject);
         }
     }
 }

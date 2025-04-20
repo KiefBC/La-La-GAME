@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fcd96f87099b24b9e819babddec84c8b
+guid: 2ef95c273c682483a96930e6dbe7b02f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword Swing
+      name: Player Walk
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 61
+      lastFrame: 41
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

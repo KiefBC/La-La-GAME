@@ -101,7 +101,7 @@ namespace Combat
             }
             else
             {
-                _target.TakeDamage(_currentWeapon.GetDamge());
+                _target.TakeDamage(_currentWeapon.GetDamage());
             }
             
         }
@@ -140,6 +140,11 @@ namespace Combat
         {
             _animator.ResetTrigger("attack");
             _animator.SetTrigger("stopAttack");
+        }
+        
+        public Weapon GetWeapon()
+        {
+            return _currentWeapon;
         }
     }
 }

@@ -9,10 +9,18 @@ namespace Combat
         private void OnTriggerEnter(Collider other)
         {
             if (!other.CompareTag("Player")) return;
-        
-            Debug.Log("DEBUG :: Picked up weapon");
-            other.GetComponent<Fighter>().EquipWeapon(weapon);
-            Destroy(gameObject);
+            
+            // If we already have the same weapon
+            if (other.GetComponent<Fighter>().GetWeapon() != weapon)
+            {
+                Debug.Log("DEBUG :: Picked up weapon");
+                other.GetComponent<Fighter>().EquipWeapon(weapon);
+                Destroy(gameObject);
+            }
+            else
+            {
+                Debug.Log("DEBUG :: Already have this weapon");
+            }
         }
     }
 }

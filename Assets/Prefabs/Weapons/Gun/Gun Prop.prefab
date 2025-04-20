@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 205372678180222492}
   - component: {fileID: 7916999343982033778}
   - component: {fileID: 6813993852408186582}
-  - component: {fileID: 1846004227285822586}
   m_Layer: 0
   m_Name: Gun Prop
   m_TagString: Untagged
@@ -110,25 +109,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43396669353799222, guid: b2587291db196e24485c16682f1c49ec, type: 2}
---- !u!64 &1846004227285822586
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6367420519841199390}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 43734873197532886, guid: b2587291db196e24485c16682f1c49ec, type: 2}

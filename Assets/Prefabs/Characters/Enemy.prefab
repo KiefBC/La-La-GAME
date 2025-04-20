@@ -54,11 +54,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2476653486581934855, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Name
-      value: Weak Enemy
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 2476653486581934855, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2623611079420996271, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2921351832138401850, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_UseGravity
@@ -75,7 +79,7 @@ PrefabInstance:
     - target: {fileID: 3555036433467028331, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 047fa59aabbb742c09ee73925e047ac2, type: 2}
+      objectReference: {fileID: 22100000, guid: 83ff79ad1f1b6497b8bfc7cca39da4aa, type: 2}
     - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: weapon
       value: 
