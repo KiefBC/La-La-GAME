@@ -8,6 +8,7 @@ namespace Combat
     {
         [SerializeField] private float projectileTravelSpeed = 1f;
         [SerializeField] private bool isHoming = true;
+        [SerializeField] private GameObject hitEffect = null;
     
         private Health _target = null;
         private float _damage = 0f;
@@ -52,6 +53,12 @@ namespace Combat
             if (other.GetComponent<Health>() != _target) return;
             if (_target.IsDead) return;
             _target.TakeDamage(_damage);
+            
+            if (hitEffect != null)
+            {
+                Instantiate(hitEffect, transform.position, Quaternion.identity);
+            }
+            
             Destroy(gameObject);
         }
     }

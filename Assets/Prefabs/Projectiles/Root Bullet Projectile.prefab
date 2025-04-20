@@ -205,6 +205,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileTravelSpeed: 20
+  isHoming: 1
+  hitEffect: {fileID: 3480753271123634133, guid: 055e8552178fa4e72a85364659040b11, type: 3}
 --- !u!136 &4315572985000405391
 CapsuleCollider:
   m_ObjectHideFlags: 0
