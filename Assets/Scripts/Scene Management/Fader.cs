@@ -8,18 +8,15 @@ namespace Scene_Management
     {
         private CanvasGroup _canvasGroup;
         
-        private void Awake()
+        private void Start()
         {
             _canvasGroup = GetComponent<CanvasGroup>();
             if (_canvasGroup == null)
             {
                 Debug.LogError($"Missing CanvasGroup component on {gameObject.name}");
             }
-        }
 
-        private void Start()
-        {
-            // ??
+            _canvasGroup.alpha = 0;
         }
 
         public IEnumerator FadeOut(float time)

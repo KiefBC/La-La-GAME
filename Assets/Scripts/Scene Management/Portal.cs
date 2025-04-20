@@ -17,29 +17,14 @@ namespace Scene_Management
         [SerializeField] private Transform spawnPoint;
         [SerializeField] private DestinationIdentifier destination;
         [SerializeField] private float fadeTime = 1f; // Or we could use fadeIn and fadeOut
-        [SerializeField] private float waitTime = 0.5f;
-
-        private Fader _fader;
-        
-        private void Awake()
-        {
-            _fader = FindAnyObjectByType<Fader>();
-            if (_fader == null)
-            {
-                Debug.LogError($"Missing Fader component on {gameObject.name}");
-            }
-        }
+        [SerializeField] private float waitTime = 1f;
 
         private void OnTriggerEnter(Collider other)
         {
-            if (sceneToLoad < 0)
+            if (other.CompareTag("Player"))
             {
-                Debug.LogError("Scene to load not set on " + gameObject.name);
-                return;
+                StartCoroutine(Transition());
             }
-            
-            if (!other.gameObject.CompareTag("Player")) return;
-            StartCoroutine(Transition());
         }
 
         private IEnumerator Transition()
@@ -50,16 +35,20 @@ namespace Scene_Management
                 yield break;
             }
 
+            // Make this portal a root object before using DontDestroyOnLoad
+            transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
             
-            yield return _fader.FadeOut(fadeTime);
+            Fader fader = FindObjectOfType<Fader>();
+            
+            yield return fader.FadeOut(fadeTime);
             yield return SceneManager.LoadSceneAsync(sceneToLoad);
 
             Portal otherPortal = GetOtherPortal();
             UpdatePlayer(otherPortal);
             
             yield return new WaitForSeconds(waitTime);
-            yield return _fader.FadeIn(fadeTime);
+            yield return fader.FadeIn(fadeTime);
             
             Debug.Log("Scene Loaded");
             Destroy(gameObject);

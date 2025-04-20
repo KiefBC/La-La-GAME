@@ -10,7 +10,7 @@ namespace Core
         
         static bool _hasSpawned = false;
 
-        private void Awake()
+        private void Start()
         {
             if (_hasSpawned) return;
             SpawnPersistentObjects();
