@@ -1,10 +1,12 @@
 using UnityEngine;
 using UnityEngine.AI;
 using Core;
+using Core.Saving;
+using Newtonsoft.Json.Linq;
 
 namespace Movement
 {
-    public class Mover : MonoBehaviour, IAction
+    public class Mover : MonoBehaviour, IAction, IJsonSaveable
     {
         [SerializeField] private Transform target;
         [SerializeField] private float maxSpeed = 6f; // Maximum speed of the agent
@@ -76,6 +78,19 @@ namespace Movement
         {
             _scheduler.StartAction(this);
             MoveTo(destination, speedFraction);
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return transform.position.ToToken();
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            GetComponent<NavMeshAgent>().enabled = false;
+            transform.position = state.ToVector3();
+            GetComponent<NavMeshAgent>().enabled = true;
+            GetComponent<ActionScheduler>().CancelCurrentAction();
         }
     }
 }

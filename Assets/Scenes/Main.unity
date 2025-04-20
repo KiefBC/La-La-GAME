@@ -187,6 +187,10 @@ PrefabInstance:
       propertyPath: patrolSpeedFraction
       value: 0.582
       objectReference: {fileID: 0}
+    - target: {fileID: 6913873484476370076, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: uniqueIdentifier
+      value: cff1717b-0d05-4ed2-b010-6a7d1c11cf43
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -688,6 +692,10 @@ PrefabInstance:
     - target: {fileID: 5474368803548864605, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
       propertyPath: patrolSpeedFraction
       value: 0.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913873484476370076, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: uniqueIdentifier
+      value: e88f51a8-baf6-42ff-a2d0-1c97d7d59cb9
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1944,6 +1952,10 @@ PrefabInstance:
       propertyPath: patrolSpeedFraction
       value: 0.164
       objectReference: {fileID: 0}
+    - target: {fileID: 6913873484476370076, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 429363e4-c0bc-46d2-80b6-493426d179ce
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2427,6 +2439,10 @@ PrefabInstance:
     - target: {fileID: 5474368803548864605, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
       propertyPath: patrolSpeedFraction
       value: 0.582
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913873484476370076, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 45f0a250-443e-4736-a42a-51fc7777e3ff
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3420,6 +3436,10 @@ PrefabInstance:
       propertyPath: patrolSpeedFraction
       value: 0.164
       objectReference: {fileID: 0}
+    - target: {fileID: 6913873484476370076, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: uniqueIdentifier
+      value: fabb3be8-59bb-4282-8f2a-9c1a0e42f9e9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3656,6 +3676,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6583605063560104514, guid: 218c9cb2303e041ca901246b0a5cb282, type: 3}
+      propertyPath: uniqueIdentifier
+      value: def4283b-274f-4e17-8a40-b8de5227beef
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3733,6 +3757,10 @@ PrefabInstance:
     - target: {fileID: 5474368803548864605, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
       propertyPath: patrolSpeedFraction
       value: 0.582
+      objectReference: {fileID: 0}
+    - target: {fileID: 6913873484476370076, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: uniqueIdentifier
+      value: 1242725e-d101-42ab-a233-9e89e19ed97a
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3939,7 +3967,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5477140728521193838, guid: 41feb044c67d8436cb1e5629d8753648, type: 3}
       propertyPath: destination
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1650053600720404271, guid: 41feb044c67d8436cb1e5629d8753648, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4411,6 +4439,14 @@ PrefabInstance:
     - target: {fileID: 5045715711765859160, guid: 1aefe410aacfb4365a086cc40a091250, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.00623614
+      objectReference: {fileID: 0}
+    - target: {fileID: 5102154973660555321, guid: 1aefe410aacfb4365a086cc40a091250, type: 3}
+      propertyPath: uniqueIdentifier
+      value: player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5864808031696261558, guid: 1aefe410aacfb4365a086cc40a091250, type: 3}
+      propertyPath: AvoidObstacles.Strategy
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7393692987521526502, guid: 1aefe410aacfb4365a086cc40a091250, type: 3}
       propertyPath: m_LocalPosition.x
