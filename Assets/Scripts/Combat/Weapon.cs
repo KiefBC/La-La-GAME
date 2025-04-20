@@ -52,7 +52,7 @@ namespace Combat
             Destroy(oldWeapon.gameObject);
         }
 
-        private static Transform GetOldWeapon(Transform rightHand, Transform leftHand)
+        private Transform GetOldWeapon(Transform rightHand, Transform leftHand)
         {
             Transform oldWeapon = rightHand.Find(WeaponName);
             if (oldWeapon == null)
