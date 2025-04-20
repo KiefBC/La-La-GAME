@@ -64,6 +64,10 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2921351832138401850, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3555036433467028331, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: m_Avatar
       value: 

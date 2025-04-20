@@ -7,27 +7,28 @@ namespace Combat
     {
         [SerializeField] private float speed = 1f;
     
-        private Health target = null;
+        private Health _target = null;
     
     
         void Update()
         {
-            if (!target) return;
+            if (!_target) return;
             transform.LookAt(GetAimPosition());
             transform.Translate(Vector3.forward * (speed * Time.deltaTime));
         }
         
         public void SetTarget(Health target)
         {
-            this.target = target;
+            if (!target) return;
+            Debug.Log("DEBUG :: Projectile target set");
+            this._target = target;
         }
 
         private Vector3 GetAimPosition()
         {
-            CapsuleCollider targetCollider = GetComponent<CapsuleCollider>();
-            if (!targetCollider) return target.transform.position;
-            if (targetCollider.center == Vector3.zero) return target.transform.position;
-            return target.transform.position + targetCollider.center;
+            CapsuleCollider targetCollider = _target.GetComponent<CapsuleCollider>();
+            if (!targetCollider) return _target.transform.position; // If no collider, just aim at the target
+            return _target.transform.position + targetCollider.center;
         }
     }
 }
