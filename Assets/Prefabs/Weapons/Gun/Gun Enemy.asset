@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86b10d00d382485987008c6df89762fb, type: 3}
-  m_Name: Sword
+  m_Name: Gun Enemy
   m_EditorClassIdentifier: 
-  playerAnimatorOverride: {fileID: 22100000, guid: 5aa5da35113a449ebbdda0d441a73d78, type: 2}
-  enemyAnimatorOverride: {fileID: 0}
-  equippedPrefab: {fileID: 6008796629705683083, guid: acf5ad0efdcb44636a9f6fae5bf3a4b1, type: 3}
+  playerAnimatorOverride: {fileID: 22100000, guid: 987b1173d36b141bc979837bbd591b77, type: 2}
+  enemyAnimatorOverride: {fileID: 22100000, guid: 320b6e0369ee543beba484bbafb3c090, type: 2}
+  equippedPrefab: {fileID: 9109491048857902277, guid: e183206b2bbd842a18f860e5d1fc9b3f, type: 3}
   weaponDamage: 10
-  weaponRange: 2
+  weaponRange: 15
   isRightHanded: 1
-  projectile: {fileID: 0}
+  projectile: {fileID: 6765273310996407972, guid: 15161220b8ad249bebd12fc5e9ab4031, type: 3}

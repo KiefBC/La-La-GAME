@@ -23,16 +23,20 @@ namespace Combat
         
         public void Spawn(Transform rightHand, Transform leftHand, Animator animator)
         {
-            if (equippedPrefab == null) return;
-            
-            Transform handTransform = GetTransform(rightHand, leftHand);
-            GameObject weapon = Instantiate(equippedPrefab, handTransform);
-            weapon.name = WeaponName;
-            
-            // Check if we should override the animator
-            AnimatorOverrideController overrideToUse = GetAnimatorOverride(animator.gameObject);
-            if (overrideToUse == null) return;
-            animator.runtimeAnimatorController = overrideToUse;
+            DestroyOldWeapon(rightHand, leftHand);
+            if (equippedPrefab != null)
+            {
+                Transform handTransform = GetTransform(rightHand, leftHand);
+                GameObject weapon = Instantiate(equippedPrefab, handTransform);
+                weapon.name = WeaponName;
+            }
+
+            if (animator != null)
+            {
+                AnimatorOverrideController overrideToUse = GetAnimatorOverride(animator.gameObject);
+                if (overrideToUse == null) return;
+                animator.runtimeAnimatorController = overrideToUse;
+            }
         }
 
         private AnimatorOverrideController GetAnimatorOverride(GameObject owner)
@@ -73,5 +77,9 @@ namespace Combat
         public bool HasProjectile() => projectile != null;
         public float GetDamage() => weaponDamage;
         public float GetRange() => weaponRange;
+        
+        public string GetWeaponName() => name;
+        
+        public Weapon GetWeapon() => this;
     }
 }

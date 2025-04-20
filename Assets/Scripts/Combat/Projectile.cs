@@ -24,7 +24,6 @@ namespace Combat
             if (!target) return;
             _target = target;
             _damage = damage;
-            Debug.Log($"DEBUG :: Projectile damage set to {_target.name}: {_damage}");
         }
 
         private Vector3 GetAimPosition()

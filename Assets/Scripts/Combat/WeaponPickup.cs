@@ -10,10 +10,8 @@ namespace Combat
         {
             if (!other.CompareTag("Player")) return;
             
-            // If we already have the same weapon
             if (other.GetComponent<Fighter>().GetWeapon() != weapon)
             {
-                Debug.Log("DEBUG :: Picked up weapon");
                 other.GetComponent<Fighter>().EquipWeapon(weapon);
                 Destroy(gameObject);
             }
@@ -21,6 +19,16 @@ namespace Combat
             {
                 Debug.Log("DEBUG :: Already have this weapon");
             }
+        }
+        
+        private void Spin()
+        {
+            transform.Rotate(0, 30 * Time.deltaTime, 0);
+        }
+        
+        void Update()
+        {
+            Spin();
         }
     }
 }
