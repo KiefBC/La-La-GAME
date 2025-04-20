@@ -1,11 +1,13 @@
 using Core;
+using Core.Saving;
 using UnityEngine;
 using Movement;
+using Newtonsoft.Json.Linq;
 using Unity.VisualScripting;
 
 namespace Combat
 {
-    public class Fighter : MonoBehaviour, IAction
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
     {
         [SerializeField] private float timeBetweenAttacks = 2f;
         [SerializeField] Transform rightHandTransform = null;
@@ -23,7 +25,10 @@ namespace Combat
         private void Start()
         {
             InitializeComponents();
-            EquipWeapon(defaultWeapon);
+            if (_currentWeapon == null)
+            {
+                EquipWeapon(defaultWeapon);
+            }
         }
         
         private void Update()
@@ -145,6 +150,17 @@ namespace Combat
         public Weapon GetWeapon()
         {
             return _currentWeapon;
+        }
+
+        public JToken CaptureAsJToken()
+        {
+            return JToken.FromObject(_currentWeapon.name);
+        }
+
+        public void RestoreFromJToken(JToken state)
+        {
+            Weapon weaponLoaded = Resources.Load<Weapon>(state.ToObject<string>());
+            EquipWeapon(weaponLoaded);
         }
     }
 }
