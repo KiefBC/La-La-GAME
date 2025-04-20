@@ -45,11 +45,13 @@ namespace Core.Saving
         /// </summary>
         public void Delete(string saveFile)
         {
+            Debug.Log("Deleting " + GetPathFromSaveFile(saveFile));
             File.Delete(GetPathFromSaveFile(saveFile));
         }
 
         public void Load(string saveFile)
         {
+            Debug.Log("Loading " + GetPathFromSaveFile(saveFile));
             RestoreFromToken(LoadJsonFromFile(saveFile));
         }
 
@@ -89,7 +91,7 @@ namespace Core.Saving
         private void SaveFileAsJSon(string saveFile, JObject state)
         {
             string path = GetPathFromSaveFile(saveFile);
-            print("Saving to " + path);
+            Debug.Log("Saving to " + path);
             using (var textWriter = File.CreateText(path))
             {
                 using (var writer = new JsonTextWriter(textWriter))

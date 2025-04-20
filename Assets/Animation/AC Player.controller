@@ -9,7 +9,7 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: ae7ab2071a6554229b6bcd6a5edeacb7, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 9ef7a31c46440406ebd6b9ce46b46f8a, type: 3}
     m_Threshold: 0.001
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -17,7 +17,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 386717fbdd4024466b64f79ce7d11a1e, type: 3}
+    m_Motion: {fileID: -203655887218126122, guid: 2ef95c273c682483a96930e6dbe7b02f, type: 3}
     m_Threshold: 0.3
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
@@ -53,7 +53,7 @@ AnimatorStateMachine:
     m_Position: {x: 340, y: 20, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8954208872676466282}
-    m_Position: {x: 360, y: -150, z: 0}
+    m_Position: {x: 340, y: -90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6005914573350252371}
     m_Position: {x: 485.5, y: 208.5, z: 0}
@@ -174,6 +174,18 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
   - m_Name: die
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: pickupItem
+    m_Type: 9
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: rangedAttack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
