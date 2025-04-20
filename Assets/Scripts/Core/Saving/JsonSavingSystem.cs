@@ -129,7 +129,16 @@ namespace Core.Saving
 
         private string GetPathFromSaveFile(string saveFile)
         {
-            return Path.Combine(Application.persistentDataPath, saveFile + extension);
+            string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
+            string gameFolderPath = Path.Combine(desktopPath, "My GAME");
+            
+            // Create the directory if it doesn't exist
+            if (!Directory.Exists(gameFolderPath))
+            {
+                Directory.CreateDirectory(gameFolderPath);
+            }
+            
+            return Path.Combine(gameFolderPath, saveFile + extension);
         }
     }
 }
