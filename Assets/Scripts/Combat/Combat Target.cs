@@ -1,5 +1,5 @@
+using Attributes;
 using UnityEngine;
-using Core;
 
 namespace Combat
 {

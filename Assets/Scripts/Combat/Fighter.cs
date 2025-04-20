@@ -1,9 +1,9 @@
+using Attributes;
 using Core;
 using Core.Saving;
 using UnityEngine;
 using Movement;
 using Newtonsoft.Json.Linq;
-using Unity.VisualScripting;
 
 namespace Combat
 {

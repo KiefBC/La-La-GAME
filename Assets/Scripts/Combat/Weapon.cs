@@ -1,10 +1,11 @@
+using Attributes;
 using Core;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Combat
 {
-    [CreateAssetMenu(fileName = "Weapon", menuName = "Weapon/Make New Weapon", order = 0)]
+    [CreateAssetMenu(fileName = "Weapon", menuName = "The Game/Make New Weapon", order = 0)]
     public class Weapon : ScriptableObject
     {
         [Header("Animation")]

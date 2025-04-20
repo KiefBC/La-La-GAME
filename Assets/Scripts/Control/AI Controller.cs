@@ -1,4 +1,5 @@
 using System;
+using Attributes;
 using Combat;
 using UnityEngine;
 using Core;

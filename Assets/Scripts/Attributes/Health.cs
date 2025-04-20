@@ -1,9 +1,11 @@
+using Core;
 using Core.Saving;
+using Newtonsoft.Json.Linq;
+using Stats;
 using UnityEngine;
 using UnityEngine.AI;
-using Newtonsoft.Json.Linq;
 
-namespace Core
+namespace Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
@@ -17,6 +19,12 @@ namespace Core
         public bool IsDead => _isDead;
         
         private void Start()
+        {
+            InitializeComponents();
+            healthPoints = GetComponent<BaseStats>().GetHealth();
+        }
+
+        private void InitializeComponents()
         {
             _animator = GetComponent<Animator>();
             if (_animator == null)
@@ -42,7 +50,7 @@ namespace Core
                 Debug.LogError($"Missing ActionScheduler component on {gameObject.name}");
             }
         }
-        
+
         public void TakeDamage(float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
