@@ -20,6 +20,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: 3222040ba990a406d8b8d40183136705, type: 2}
+    - target: {fileID: 1863285119074898719, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: characterClass
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2402713313535711585, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -92,13 +96,35 @@ PrefabInstance:
     - {fileID: 3550886167183638002, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 328977833071199117, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 31520375714176619}
   m_SourcePrefab: {fileID: 100100000, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
 --- !u!4 &3587762095565031118 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8761877613707755435, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
   m_PrefabInstance: {fileID: 5211293524543977829}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5531256250581613288 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 328977833071199117, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+  m_PrefabInstance: {fileID: 5211293524543977829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &31520375714176619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5531256250581613288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb2852931e7b945b6bc9b7ebc593dc39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: 1
+  characterClass: 1
 --- !u!4 &8233568030056688837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4184329323244033440, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
