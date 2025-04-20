@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8195122116079145262}
   - component: {fileID: 8860095234955471970}
   m_Layer: 0
-  m_Name: Teleport Fire
+  m_Name: Fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
