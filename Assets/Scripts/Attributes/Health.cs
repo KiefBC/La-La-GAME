@@ -1,3 +1,4 @@
+using System;
 using Core;
 using Core.Saving;
 using Newtonsoft.Json.Linq;
@@ -109,6 +110,30 @@ namespace Attributes
             _isDead = true;
             _animator.SetTrigger(Die1);
             _scheduler.CancelCurrentAction();
+        }
+
+        private void OnEnable()
+        {
+            if (_capsuleCollider != null)
+            {
+                _capsuleCollider.enabled = !_isDead;
+            }
+            if (_navMeshAgent != null)
+            {
+                _navMeshAgent.enabled = !_isDead;
+            }
+        }
+        
+        private void OnDisable()
+        {
+            if (_capsuleCollider != null)
+            {
+                _capsuleCollider.enabled = !_isDead;
+            }
+            if (_navMeshAgent != null)
+            {
+                _navMeshAgent.enabled = !_isDead;
+            }
         }
 
         public JToken CaptureAsJToken()

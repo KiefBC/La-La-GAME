@@ -11,7 +11,12 @@ namespace Control
         private Fighter _fighter;
         private Health _health;
 
-        void Start()
+        void Awake()
+        {
+            InitializeComponents();
+        }
+
+        private void InitializeComponents()
         {
             _mover = GetComponent<Mover>();
             if (_mover == null)
@@ -31,7 +36,7 @@ namespace Control
                 Debug.LogError($"Missing Health component on {gameObject.name}");
             }
         }
-        
+
         void Update()
         {
             if (_health.IsDead) return;

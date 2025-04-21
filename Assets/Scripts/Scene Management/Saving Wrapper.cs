@@ -16,9 +16,9 @@ namespace Scene_Management
 
         private IEnumerator LoadLastScene()
         {
+            yield return GetComponent<JsonSavingSystem>().LoadLastScene(SaveFileName);
             Fader fader = FindAnyObjectByType<Fader>();
             fader.FadeOutImmediate();
-            yield return GetComponent<JsonSavingSystem>().LoadLastScene(SaveFileName);
             yield return fader.FadeIn(fadeInTime);
         }
         

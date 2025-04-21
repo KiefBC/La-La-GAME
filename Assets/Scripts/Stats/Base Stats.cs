@@ -12,19 +12,35 @@ namespace Stats
         [SerializeField] private Progression progression = null;
         [SerializeField] private GameObject levelUpParticleEffect = null;
         [SerializeField] private bool shouldUseModifiers = false;
+
+        private Experience _experience;
         
-
         public event Action OnLevelUp;
-
         private int _currentLevel = 0;
+        
+        private void Awake()
+        {
+            _experience = GetComponent<Experience>();
+        }
 
         private void Start()
         {
             _currentLevel = CalculateLevel();
-            Experience experience = GetComponent<Experience>();
-            if (experience != null)
+        }
+
+        private void OnEnable()
+        {
+            if (_experience != null)
             {
-                experience.OnExperienceGained += UpdateLevel;
+                _experience.OnExperienceGained += UpdateLevel;
+            }
+        }
+        
+        private void OnDisable()
+        {
+            if (_experience != null)
+            {
+                _experience.OnExperienceGained -= UpdateLevel;
             }
         }
 
@@ -60,7 +76,14 @@ namespace Stats
                 _currentLevel = newLevel;
                 Debug.Log("Level up! You are now level " + _currentLevel);
                 LevelUpParticleEffect();
-                OnLevelUp();
+                if (OnLevelUp != null)
+                {
+                    OnLevelUp();
+                }
+                else
+                {
+                    Debug.LogError("OnLevelUp event not set on " + gameObject.name);
+                }
             }
         }
 
@@ -83,12 +106,12 @@ namespace Stats
             Experience experience = GetComponent<Experience>();
             if (experience == null) return startingLevel;
             
-            float currentXP =experience.GetExperiencePoints();
+            float currentXp =experience.GetExperiencePoints();
             int maxLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);
             for (int level = 1; level <= maxLevel; level++)
             {
-                float XPToLevelUp = progression.GetStat(Stat.ExperienceToLevelUp, characterClass, level);
-                if (currentXP < XPToLevelUp)
+                float xpToLevelUp = progression.GetStat(Stat.ExperienceToLevelUp, characterClass, level);
+                if (currentXp < xpToLevelUp)
                 {
                     return level;
                 }

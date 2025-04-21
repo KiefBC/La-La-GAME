@@ -40,6 +40,10 @@ namespace Control
         private void Awake()
         {
             InitializeComponents();
+        }
+        
+        private void Start()
+        {
             _currentState = AIState.Patrol;
         }
 
