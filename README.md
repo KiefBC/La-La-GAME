@@ -2,6 +2,8 @@
 
 A Unity-based RPG game with combat, experience, and save systems.
 
+NOTE: Textures not included.
+
 ## Core Features
 
 ### Combat System
