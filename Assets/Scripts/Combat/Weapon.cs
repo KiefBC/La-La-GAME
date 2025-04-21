@@ -15,6 +15,7 @@ namespace Combat
         [Header("Weapon Settings")]
         [SerializeField] GameObject equippedPrefab = null;
         [SerializeField] private float weaponDamage = 5f;
+        [SerializeField] private float percentDamageBonus = 0f;
         [SerializeField] private float weaponRange = 2f;
         [SerializeField] private bool isRightHanded = true;
         [SerializeField] private Projectile projectile = null;
@@ -78,9 +79,8 @@ namespace Combat
         public bool HasProjectile() => projectile != null;
         public float GetDamage() => weaponDamage;
         public float GetRange() => weaponRange;
-        
+        public float GetPercentDamageBonus() => percentDamageBonus;
         public string GetWeaponName() => name;
-        
         public Weapon GetWeapon() => this;
     }
 }

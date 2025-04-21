@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 namespace Control
@@ -15,7 +14,6 @@ namespace Control
                 Gizmos.color = Color.red;
                 Gizmos.DrawSphere(GetWayPoint(i), WayPointRadius);
                 Gizmos.DrawLine(GetWayPoint(i), GetWayPoint(j));
-                
             }
         }
         

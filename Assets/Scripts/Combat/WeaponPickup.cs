@@ -41,13 +41,13 @@ namespace Combat
             ShowPickUp(true);
         }
 
-        private void ShowPickUp(bool shouldshow)
+        private void ShowPickUp(bool shouldShow)
         {
             GetComponent<Collider>().enabled = true;
             
             foreach (Transform child in transform)
             {
-                child.gameObject.SetActive(shouldshow);
+                child.gameObject.SetActive(shouldShow);
             }
         }
     }

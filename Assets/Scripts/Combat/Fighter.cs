@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Attributes;
 using Core;
 using Core.Saving;
@@ -8,8 +9,9 @@ using Stats;
 
 namespace Combat
 {
-    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable, IModifierProvider
     {
+        private static readonly int Attack1 = Animator.StringToHash("attack");
         [SerializeField] private float timeBetweenAttacks = 2f;
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
@@ -97,8 +99,8 @@ namespace Combat
 
         private void TriggerAttackAnimation()
         {
-            _animator.ResetTrigger("attack");
-            _animator.SetTrigger("attack");
+            _animator.ResetTrigger(Attack1);
+            _animator.SetTrigger(Attack1);
         }
 
         // Animation Event
@@ -168,6 +170,22 @@ namespace Combat
         {
             Weapon weaponLoaded = Resources.Load<Weapon>(state.ToObject<string>());
             EquipWeapon(weaponLoaded);
+        }
+
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _currentWeapon.GetDamage();
+            }
+        }
+
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _currentWeapon.GetPercentDamageBonus();
+            }
         }
     }
 }

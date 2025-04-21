@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+
 namespace Stats
 {
     public class BaseStats : MonoBehaviour
@@ -10,6 +11,8 @@ namespace Stats
         [SerializeField] private CharacterClass characterClass;
         [SerializeField] private Progression progression = null;
         [SerializeField] private GameObject levelUpParticleEffect = null;
+        [SerializeField] private bool shouldUseModifiers = false;
+        
 
         public event Action OnLevelUp;
 
@@ -27,13 +30,26 @@ namespace Stats
 
         public float GetStat(Stat stat)
         {
-            return progression.GetStat(stat, characterClass, GetLevel()) + GetAdditionalStat(stat);
+            return (GetBaseStat(stat) + GetAdditiveModifier(stat)) * (1 + GetPercentageModifier(stat) / 100);
         }
 
-        private float GetAdditionalStat(Stat stat)
+        private float GetPercentageModifier(Stat stat)
         {
-            // ok
-            return 0;
+            if (!shouldUseModifiers) return 0;
+            float total = 0;
+            foreach (IModifierProvider provider in GetComponents<IModifierProvider>())
+            {
+                foreach (float modifier in provider.GetPercentageModifiers(stat))
+                {
+                    total += modifier;
+                }
+            }
+            return total;
+        }
+
+        private float GetBaseStat(Stat stat)
+        {
+            return progression.GetStat(stat, characterClass, GetLevel());
         }
 
         private void UpdateLevel()
@@ -78,6 +94,20 @@ namespace Stats
                 }
             }
             return maxLevel + 1;
+        }
+
+        private float GetAdditiveModifier(Stat stat)
+        {
+            if (!shouldUseModifiers) return 0;
+            float total = 0;
+            foreach (IModifierProvider provider in GetComponents<IModifierProvider>())
+            {
+                foreach (float modifier in provider.GetAdditiveModifiers(stat))
+                {
+                    total += modifier;
+                }
+            }
+            return total;
         }
     }
 }

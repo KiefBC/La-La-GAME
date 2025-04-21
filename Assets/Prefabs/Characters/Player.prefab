@@ -153,6 +153,10 @@ PrefabInstance:
       propertyPath: characterClass
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4545718964669791125, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: shouldUseModifiers
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: weapon
       value: 
@@ -305,4 +309,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9d97ffd92a2d4577bbc3a7f7c2f7793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xp: 0
+  experiencePoints: 0

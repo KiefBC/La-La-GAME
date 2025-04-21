@@ -1,5 +1,3 @@
-using System;
-using Stats;
 using UnityEngine;
 using TMPro;
 

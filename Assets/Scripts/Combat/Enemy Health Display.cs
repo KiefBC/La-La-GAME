@@ -20,8 +20,8 @@ namespace Combat
                 GetComponent<TextMeshProUGUI>().text = "N/A";
                 return;
             }
-            Health _health = _fighter.GetTarget().GetComponent<Health>();
-            GetComponent<TextMeshProUGUI>().text = $"{_health.GetHealthPoints():0}/{_health.GetMaxHealthPoints():0}"; 
+            Health health = _fighter.GetTarget().GetComponent<Health>();
+            GetComponent<TextMeshProUGUI>().text = $"{health.GetHealthPoints():0}/{health.GetMaxHealthPoints():0}"; 
         }
     }
 }

@@ -2,7 +2,6 @@ using Attributes;
 using UnityEngine;
 using Movement;
 using Combat;
-using Core;
 
 namespace Control
 {

@@ -9,6 +9,7 @@ namespace Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
+        private static readonly int Die1 = Animator.StringToHash("die");
         [SerializeField] private float regenerationPercentage = 70f;
         
         private float _healthPoints = -1f;
@@ -106,7 +107,7 @@ namespace Attributes
             if (_isDead) return;
             
             _isDead = true;
-            _animator.SetTrigger("die");
+            _animator.SetTrigger(Die1);
             _scheduler.CancelCurrentAction();
         }
 

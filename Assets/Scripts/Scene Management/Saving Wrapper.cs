@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using Core.Saving;
@@ -7,7 +6,7 @@ namespace Scene_Management
 {
     public class SavingWrapper : MonoBehaviour
     {
-        private const string SaveFileName = "sav1";
+        private const string SaveFileName = "sav";
         [SerializeField] private float fadeInTime = 1f;
 
         private void Awake()
