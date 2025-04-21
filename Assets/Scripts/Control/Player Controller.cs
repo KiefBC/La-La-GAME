@@ -1,7 +1,9 @@
+using System;
 using Attributes;
 using UnityEngine;
 using Movement;
 using Combat;
+using UnityEngine.EventSystems;
 
 namespace Control
 {
@@ -12,15 +14,8 @@ namespace Control
         private Mover _mover;
         private Fighter _fighter;
         private Health _health;
-        
-        public enum CursorState
-        {
-            Combat,
-            Movement,
-            None
-        }
 
-        [System.Serializable]
+        [Serializable]
         public struct CursorMapping
         {
             public CursorState state;
@@ -56,30 +51,49 @@ namespace Control
 
         void Update()
         {
-            if (_health.IsDead) return;
-            if (InteractWithCombat()) return;
+            if (InteractWithUI()) return;
+            if (_health.IsDead)
+            {
+                SetCursorState(CursorState.None);
+                return;
+            };
+            if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
             SetCursorState(CursorState.None);
         }
 
-        private bool InteractWithCombat()
+        private bool InteractWithComponent()
         {
-            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            RaycastHit[] hits = RaycastAllSorted();
             foreach (RaycastHit hit in hits)
             {
-                CombatTarget target = hit.transform.GetComponent<CombatTarget>();
-                if (target == null) continue;
+                IRayCastable raycastable = hit.transform.GetComponent<IRayCastable>();
+                if (raycastable == null) continue;
                 
-                if (!_fighter.CanAttack(target.gameObject)) continue;
-                
-                if (Input.GetMouseButton(0))
-                {
-                    _fighter.Attack(target.gameObject);
-                }
-                SetCursorState(CursorState.Combat);
+                if (!raycastable.HandleRaycast(this)) continue;
+                SetCursorState(raycastable.GetCursorState());
                 return true;
             }
             return false;
+        }
+
+        RaycastHit[] RaycastAllSorted()
+        {
+            RaycastHit[] hits = Physics.RaycastAll(GetMouseRay());
+            float[] distances = new float[hits.Length];
+            for (int i = 0; i < hits.Length; i++)
+            {
+                distances[i] = hits[i].distance;
+            }
+            Array.Sort(distances, hits);
+            return hits;
+        }
+
+        private bool InteractWithUI()
+        {
+            if (!EventSystem.current.IsPointerOverGameObject()) return false;
+            SetCursorState(CursorState.UI);
+            return true;
         }
 
         private void SetCursorState(CursorState state)

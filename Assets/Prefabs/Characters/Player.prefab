@@ -264,11 +264,17 @@ MonoBehaviour:
   - state: 0
     texture: {fileID: 2800000, guid: 1b362737dfa014a40a71ecaffce5e053, type: 3}
     hotspot: {x: 0, y: 0}
-  - state: 2
-    texture: {fileID: 2800000, guid: d0bd63dc4e8d4a845a0f198c39644e18, type: 3}
+  - state: 0
+    texture: {fileID: 2800000, guid: 0561d5958b7b1b14fb067879aaa7b5f3, type: 3}
     hotspot: {x: 0, y: 0}
-  - state: 1
+  - state: 2
     texture: {fileID: 2800000, guid: e43eb6dc9e9ce1f47bac91c53a5246fc, type: 3}
+    hotspot: {x: 0, y: 0}
+  - state: 3
+    texture: {fileID: 2800000, guid: 9cda48e378d35dc4ab62c87729c084dd, type: 3}
+    hotspot: {x: 0, y: 0}
+  - state: 4
+    texture: {fileID: 2800000, guid: 4545706b59b364441bbdde8408c6ad99, type: 3}
     hotspot: {x: 0, y: 0}
 --- !u!114 &-8356578200448510758
 MonoBehaviour:
