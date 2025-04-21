@@ -1,4 +1,3 @@
-using System;
 using Core;
 using Core.Saving;
 using Newtonsoft.Json.Linq;
@@ -10,7 +9,8 @@ namespace Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
-        [SerializeField] float healthPoints = 20f;
+        private float _healthPoints = -1f;
+        
         private Animator _animator;
         private bool _isDead = false;
         private CapsuleCollider _capsuleCollider;
@@ -26,7 +26,10 @@ namespace Attributes
 
         private void Start()
         {
-            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+            if (_healthPoints < 0)
+            {
+                _healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
+            }
         }
 
         private void InitializeComponents()
@@ -58,8 +61,8 @@ namespace Attributes
 
         public void TakeDamage(GameObject instigator,float damage)
         {
-            healthPoints = Mathf.Max(healthPoints - damage, 0);
-            if (healthPoints <= 0)
+            _healthPoints = Mathf.Max(_healthPoints - damage, 0);
+            if (_healthPoints <= 0)
             {
                 Die();
                 AwardExperience(instigator);
@@ -75,7 +78,7 @@ namespace Attributes
 
         public float GetHealthPercentage()
         {
-            return 100 * (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
+            return 100 * (_healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
         }
 
         private void Die()
@@ -89,13 +92,14 @@ namespace Attributes
 
         public JToken CaptureAsJToken()
         {
-            return JToken.FromObject(healthPoints);
+            return JToken.FromObject(_healthPoints);
         }
 
         public void RestoreFromJToken(JToken state)
         {
-            healthPoints = state.ToObject<float>();
-            if (healthPoints <= 0)
+            _healthPoints = state.ToObject<float>();
+            Debug.Log("Restored HP: " + _healthPoints);
+            if (_healthPoints <= 0)
             {
                 Die();
             }

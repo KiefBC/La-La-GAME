@@ -53,6 +53,14 @@ namespace Stats
             }
         }
         
+        public int GetLevels(Stat stat, CharacterClass characterClass)
+        {
+            BuildLookUpTable();
+            
+            float[] levels = _lookUpTable[characterClass][stat];
+            return levels.Length;
+        }
+        
         [System.Serializable]
         class ProgressionCharacterClass
         {

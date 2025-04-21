@@ -45,13 +45,13 @@ namespace Core.Saving
         /// </summary>
         public void Delete(string saveFile)
         {
-            // Debug.Log("Deleting " + GetPathFromSaveFile(saveFile));
+            Debug.Log("Deleting " + GetPathFromSaveFile(saveFile));
             File.Delete(GetPathFromSaveFile(saveFile));
         }
 
         public void Load(string saveFile)
         {
-            // Debug.Log("Loading " + GetPathFromSaveFile(saveFile));
+            Debug.Log("Loading " + GetPathFromSaveFile(saveFile));
             RestoreFromToken(LoadJsonFromFile(saveFile));
         }
 

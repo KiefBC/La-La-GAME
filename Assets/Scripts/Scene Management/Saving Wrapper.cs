@@ -29,8 +29,13 @@ namespace Scene_Management
             }
             if (Input.GetKeyDown(KeyCode.Delete))
             {
-                GetComponent<JsonSavingSystem>().Delete(saveFileName);
+                Delete();
             }
+        }
+
+        private void Delete()
+        {
+            GetComponent<JsonSavingSystem>().Delete(saveFileName);
         }
 
         public void Load()

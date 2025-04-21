@@ -1,9 +1,7 @@
-using System;
-using Stats;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
-namespace Attributes
+namespace Stats
 {
     public class ExperienceDisplay : MonoBehaviour
     {
