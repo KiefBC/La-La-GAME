@@ -60,6 +60,11 @@ namespace Attributes
             }
         }
 
+        public float GetHealthPercentage()
+        {
+            return 100 * (healthPoints / GetComponent<BaseStats>().GetHealth());
+        }
+
         private void Die()
         {
             if (_isDead) return;

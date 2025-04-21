@@ -55,6 +55,11 @@ namespace Combat
             Animator animator = GetComponent<Animator>();
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
+        
+        public Health GetTarget()
+        {
+            return _target;
+        }
 
         private void InitializeComponents()
         {
