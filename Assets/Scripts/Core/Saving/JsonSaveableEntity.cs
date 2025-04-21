@@ -27,7 +27,7 @@ namespace Core.Saving
             {
                 JToken token = jsonSaveable.CaptureAsJToken();
                 string component = jsonSaveable.GetType().ToString();
-                Debug.Log($"{name} Capture {component} = {token.ToString()}");
+                // Debug.Log($"{name} Capture {component} = {token.ToString()}");
                 stateDict[jsonSaveable.GetType().ToString()] = token;
             }
             return state;
@@ -43,7 +43,7 @@ namespace Core.Saving
                 if (stateDict.ContainsKey(component))
                 {
 
-                    Debug.Log($"{name} Restore {component} =>{stateDict[component].ToString()}");
+                    // Debug.Log($"{name} Restore {component} =>{stateDict[component].ToString()}");
                     jsonSaveable.RestoreFromJToken(stateDict[component]);
                 }
             }

@@ -1,3 +1,4 @@
+using System;
 using Core;
 using Core.Saving;
 using Newtonsoft.Json.Linq;
@@ -17,11 +18,15 @@ namespace Attributes
         private ActionScheduler _scheduler;
         
         public bool IsDead => _isDead;
-        
-        private void Start()
+
+        private void Awake()
         {
             InitializeComponents();
-            healthPoints = GetComponent<BaseStats>().GetHealth();
+        }
+
+        private void Start()
+        {
+            healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
         private void InitializeComponents()
@@ -65,12 +70,12 @@ namespace Attributes
         {
             Experience xp = instigator.GetComponent<Experience>();
             if (xp == null) return;
-            xp.GainExperience(GetComponent<BaseStats>().GetExperienceReward());
+            xp.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
         }
 
         public float GetHealthPercentage()
         {
-            return 100 * (healthPoints / GetComponent<BaseStats>().GetHealth());
+            return 100 * (healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
         }
 
         private void Die()
