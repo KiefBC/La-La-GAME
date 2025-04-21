@@ -146,8 +146,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4545718964669791125, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: startingLevel
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4545718964669791125, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: characterClass
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4545718964669791125, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: shouldUseModifiers
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: weapon
@@ -204,6 +212,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2476653486581934855, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5355327723413979809}
+    - targetCorrespondingSourceObject: {fileID: 2476653486581934855, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4108124894405319915}
   m_SourcePrefab: {fileID: 100100000, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
 --- !u!4 &5950657630536248270 stripped
 Transform:
@@ -286,3 +297,16 @@ CapsuleCollider:
   m_Height: 1.8
   m_Direction: 1
   m_Center: {x: 0, y: 0.77, z: 0}
+--- !u!114 &4108124894405319915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8600783514459091234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d97ffd92a2d4577bbc3a7f7c2f7793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  experiencePoints: 0

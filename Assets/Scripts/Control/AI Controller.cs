@@ -1,10 +1,8 @@
-using System;
+using Attributes;
 using Combat;
 using UnityEngine;
 using Core;
 using Movement;
-using Unity.VisualScripting;
-using UnityEngine.Serialization;
 
 namespace Control
 {
@@ -42,6 +40,10 @@ namespace Control
         private void Awake()
         {
             InitializeComponents();
+        }
+        
+        private void Start()
+        {
             _currentState = AIState.Patrol;
         }
 

@@ -78,7 +78,7 @@ namespace Core
                 return;
             }
         
-            Renderer[] allRenderers = GameObject.FindObjectsOfType<Renderer>();
+            Renderer[] allRenderers = GameObject.FindObjectsByType<Renderer>(FindObjectsSortMode.None);
             int count = 0;
         
             foreach (Renderer renderer in allRenderers)

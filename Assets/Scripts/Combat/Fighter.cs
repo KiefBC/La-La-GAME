@@ -1,14 +1,17 @@
+using System.Collections.Generic;
+using Attributes;
 using Core;
 using Core.Saving;
 using UnityEngine;
 using Movement;
 using Newtonsoft.Json.Linq;
-using Unity.VisualScripting;
+using Stats;
 
 namespace Combat
 {
-    public class Fighter : MonoBehaviour, IAction, IJsonSaveable
+    public class Fighter : MonoBehaviour, IAction, IJsonSaveable, IModifierProvider
     {
+        private static readonly int Attack1 = Animator.StringToHash("attack");
         [SerializeField] private float timeBetweenAttacks = 2f;
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
@@ -55,6 +58,11 @@ namespace Combat
             Animator animator = GetComponent<Animator>();
             weapon.Spawn(rightHandTransform, leftHandTransform, animator);
         }
+        
+        public Health GetTarget()
+        {
+            return _target;
+        }
 
         private void InitializeComponents()
         {
@@ -91,22 +99,23 @@ namespace Combat
 
         private void TriggerAttackAnimation()
         {
-            _animator.ResetTrigger("attack");
-            _animator.SetTrigger("attack");
+            _animator.ResetTrigger(Attack1);
+            _animator.SetTrigger(Attack1);
         }
 
         // Animation Event
          void Hit()
         {
             if (_target == null) return;
-            
+
+            float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);
             if (_currentWeapon.HasProjectile())
             {
-                _currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, _target);
+                _currentWeapon.LaunchProjectile(rightHandTransform, leftHandTransform, _target, gameObject, damage);
             }
             else
             {
-                _target.TakeDamage(_currentWeapon.GetDamage());
+                _target.TakeDamage(gameObject, damage);
             }
             
         }
@@ -161,6 +170,22 @@ namespace Combat
         {
             Weapon weaponLoaded = Resources.Load<Weapon>(state.ToObject<string>());
             EquipWeapon(weaponLoaded);
+        }
+
+        public IEnumerable<float> GetAdditiveModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _currentWeapon.GetDamage();
+            }
+        }
+
+        public IEnumerable<float> GetPercentageModifiers(Stat stat)
+        {
+            if (stat == Stat.Damage)
+            {
+                yield return _currentWeapon.GetPercentDamageBonus();
+            }
         }
     }
 }

@@ -5,6 +5,6 @@ namespace Stats
         Player,
         Warrior,
         Mage,
-        Gunsmith,
+        Gunsmith
     }
 }

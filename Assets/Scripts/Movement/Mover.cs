@@ -1,3 +1,4 @@
+using Attributes;
 using UnityEngine;
 using UnityEngine.AI;
 using Core;
@@ -8,6 +9,7 @@ namespace Movement
 {
     public class Mover : MonoBehaviour, IAction, IJsonSaveable
     {
+        private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
         [SerializeField] private Transform target;
         [SerializeField] private float maxSpeed = 6f; // Maximum speed of the agent
         
@@ -16,7 +18,12 @@ namespace Movement
         private ActionScheduler _scheduler;
         private Health _health;
 
-        private void Start()
+        private void Awake()
+        {
+            InitializeComponents();
+        }
+
+        private void InitializeComponents()
         {
             _agent = GetComponent<NavMeshAgent>();
             if (_agent == null)
@@ -54,6 +61,7 @@ namespace Movement
         /// Moves the object to the specified world position using the NavMeshAgent component.
         /// </summary>
         /// <param name="destination">The target position to move the object to.</param>
+        /// <param name="speedFraction"></param>
         public void MoveTo(Vector3 destination, float speedFraction)
         {
             _agent.destination = destination;
@@ -66,7 +74,7 @@ namespace Movement
             Vector3 velocity = _agent.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);
             float speed = localVelocity.z;
-            _animator.SetFloat("forwardSpeed", speed);
+            _animator.SetFloat(ForwardSpeed, speed);
         }
 
         public void Cancel()

@@ -10,6 +10,7 @@ namespace Scene_Management
     {
         A, B, C, D, E
     }
+    
     public class Portal : MonoBehaviour
     {
         [SerializeField] private int sceneToLoad = -1; // Throw an error if not set
@@ -38,11 +39,11 @@ namespace Scene_Management
             transform.SetParent(null);
             DontDestroyOnLoad(gameObject);
             
-            Fader fader = FindObjectOfType<Fader>();
+            Fader fader = FindAnyObjectByType<Fader>();
             
             yield return fader.FadeOut(fadeTime);
             
-            SavingWrapper savingWrapper = FindObjectOfType<SavingWrapper>();
+            SavingWrapper savingWrapper = FindAnyObjectByType<SavingWrapper>();
             savingWrapper.Save();
             
             yield return SceneManager.LoadSceneAsync(sceneToLoad);

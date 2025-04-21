@@ -1,7 +1,5 @@
-using Core;
-using Unity.VisualScripting;
+using Attributes;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Combat
 {
@@ -16,6 +14,7 @@ namespace Combat
             
         private Health _target = null;
         private float _damage = 0f;
+        private GameObject _instigator = null;
     
     
         private void Start()
@@ -38,11 +37,12 @@ namespace Combat
             transform.Translate(Vector3.forward * (projectileTravelSpeed * Time.deltaTime));
         }
         
-        public void SetTarget(Health target, float damage)
+        public void SetTarget(Health target, GameObject instigator, float damage)
         {
-            if (!target) return;
+            if (!target) return; 
             _target = target;
             _damage = damage;
+            _instigator = instigator;
             Destroy(gameObject, maxLifeTime);
         }
 
@@ -57,7 +57,7 @@ namespace Combat
         {
             if (other.GetComponent<Health>() != _target) return;
             if (_target.IsDead) return;
-            _target.TakeDamage(_damage);
+            _target.TakeDamage(_instigator, _damage);
 
             projectileTravelSpeed = 0;
             
