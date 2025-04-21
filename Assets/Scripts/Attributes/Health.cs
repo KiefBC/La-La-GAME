@@ -9,6 +9,8 @@ namespace Attributes
 {
     public class Health : MonoBehaviour, IJsonSaveable
     {
+        [SerializeField] private float regenerationPercentage = 70f;
+        
         private float _healthPoints = -1f;
         
         private Animator _animator;
@@ -26,10 +28,17 @@ namespace Attributes
 
         private void Start()
         {
+            GetComponent<BaseStats>().OnLevelUp += RegenerateHealth;
             if (_healthPoints < 0)
             {
                 _healthPoints = GetComponent<BaseStats>().GetStat(Stat.Health);
             }
+        }
+
+        private void RegenerateHealth()
+        {
+            float regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * regenerationPercentage / 100;
+            _healthPoints = Mathf.Max(_healthPoints, regenHealthPoints);
         }
 
         private void InitializeComponents()
@@ -58,9 +67,20 @@ namespace Attributes
                 Debug.LogError($"Missing ActionScheduler component on {gameObject.name}");
             }
         }
+        
+        public float GetHealthPoints()
+        {
+            return _healthPoints;
+        }
+        
+        public float GetMaxHealthPoints()
+        {
+            return GetComponent<BaseStats>().GetStat(Stat.Health);
+        }
 
         public void TakeDamage(GameObject instigator,float damage)
         {
+            Debug.Log("DEBUG :: " + gameObject.name + " took " + damage + " damage");
             _healthPoints = Mathf.Max(_healthPoints - damage, 0);
             if (_healthPoints <= 0)
             {

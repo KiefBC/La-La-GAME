@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Stats
@@ -8,6 +9,9 @@ namespace Stats
         [SerializeField] private int startingLevel = 1;
         [SerializeField] private CharacterClass characterClass;
         [SerializeField] private Progression progression = null;
+        [SerializeField] private GameObject levelUpParticleEffect = null;
+
+        public event Action OnLevelUp;
 
         private int _currentLevel = 0;
 
@@ -23,9 +27,15 @@ namespace Stats
 
         public float GetStat(Stat stat)
         {
-            return progression.GetStat(stat, characterClass, startingLevel);
+            return progression.GetStat(stat, characterClass, GetLevel()) + GetAdditionalStat(stat);
         }
-        
+
+        private float GetAdditionalStat(Stat stat)
+        {
+            // ok
+            return 0;
+        }
+
         private void UpdateLevel()
         {
             int newLevel = CalculateLevel();
@@ -33,7 +43,14 @@ namespace Stats
             {
                 _currentLevel = newLevel;
                 Debug.Log("Level up! You are now level " + _currentLevel);
+                LevelUpParticleEffect();
+                OnLevelUp();
             }
+        }
+
+        private void LevelUpParticleEffect()
+        {
+            Instantiate(levelUpParticleEffect, transform);
         }
 
         public int GetLevel()
@@ -45,7 +62,7 @@ namespace Stats
             return _currentLevel;
         }
 
-        public int CalculateLevel()
+        private int CalculateLevel()
         {
             Experience experience = GetComponent<Experience>();
             if (experience == null) return startingLevel;

@@ -16,7 +16,7 @@ namespace Attributes
         
         private void Update()
         {
-            GetComponent<TextMeshProUGUI>().text = $"{_health.GetHealthPercentage():0}%";
+            GetComponent<TextMeshProUGUI>().text = $"{_health.GetHealthPoints():0}/{_health.GetMaxHealthPoints():0}";
         }
     }
 }

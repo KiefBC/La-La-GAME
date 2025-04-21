@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using Core.Saving;
@@ -6,14 +7,19 @@ namespace Scene_Management
 {
     public class SavingWrapper : MonoBehaviour
     {
-        const string saveFileName = "sav1";
+        private const string SaveFileName = "sav1";
         [SerializeField] private float fadeInTime = 1f;
-        
-        IEnumerator Start()
+
+        private void Awake()
         {
-            Fader fader = FindObjectOfType<Fader>();
+            StartCoroutine(LoadLastScene());
+        }
+
+        private IEnumerator LoadLastScene()
+        {
+            Fader fader = FindAnyObjectByType<Fader>();
             fader.FadeOutImmediate();
-            yield return GetComponent<JsonSavingSystem>().LoadLastScene(saveFileName);
+            yield return GetComponent<JsonSavingSystem>().LoadLastScene(SaveFileName);
             yield return fader.FadeIn(fadeInTime);
         }
         
@@ -35,17 +41,17 @@ namespace Scene_Management
 
         private void Delete()
         {
-            GetComponent<JsonSavingSystem>().Delete(saveFileName);
+            GetComponent<JsonSavingSystem>().Delete(SaveFileName);
         }
 
         public void Load()
         {
-            GetComponent<JsonSavingSystem>().Load(saveFileName);
+            GetComponent<JsonSavingSystem>().Load(SaveFileName);
         }
         
         public void Save()
         {
-            GetComponent<JsonSavingSystem>().Save(saveFileName);
+            GetComponent<JsonSavingSystem>().Save(SaveFileName);
         }
     }
 }

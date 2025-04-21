@@ -43,8 +43,8 @@ namespace Combat
         public void SetTarget(Health target, GameObject instigator, float damage)
         {
             if (!target) return;
-            _target = target;
-            _damage = damage;
+            this._target = target;
+            this._damage = damage;
             this.instigator = instigator;
             Destroy(gameObject, maxLifeTime);
         }

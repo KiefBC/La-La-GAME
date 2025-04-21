@@ -1645,10 +1645,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6776904471674464805, guid: 8b98707b072994845bb91188d3db21f3, type: 3}
+      propertyPath: regenerationPercentage
+      value: 70
+      objectReference: {fileID: 0}
     - target: {fileID: 7644696955025252784, guid: 8b98707b072994845bb91188d3db21f3, type: 3}
       propertyPath: startingLevel
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7644696955025252784, guid: 8b98707b072994845bb91188d3db21f3, type: 3}
+      propertyPath: levelUpParticleEffect
+      value: 
+      objectReference: {fileID: 7305653063278387316, guid: dbd7da3db23d8438d8de4e6eb91faf70, type: 3}
     - target: {fileID: 8600783514459091234, guid: 8b98707b072994845bb91188d3db21f3, type: 3}
       propertyPath: m_Name
       value: Player
