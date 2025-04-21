@@ -151,5 +151,11 @@ namespace Attributes
                 Die();
             }
         }
+
+        public void Heal(float healthRestore)
+        {
+            if (_healthPoints <= 0) return;
+            _healthPoints = Mathf.Min(_healthPoints + healthRestore, GetMaxHealthPoints());
+        }
     }
 }

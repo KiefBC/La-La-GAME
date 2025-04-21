@@ -1,4 +1,5 @@
 using System.Collections;
+using Attributes;
 using Control;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -10,6 +11,7 @@ namespace Combat
         [FormerlySerializedAs("weapon")] [SerializeField] private WeaponConfig weaponConfig = null;
         [SerializeField] private float hideTime = 5f;
         [SerializeField] private float pickupRange = 2f;
+        [SerializeField] private float healthRestore = 0;
         
         private void OnTriggerEnter(Collider other)
         {
@@ -17,7 +19,7 @@ namespace Combat
             
             if (other.GetComponent<Fighter>().GetWeapon() != weaponConfig)
             {
-                Pickup(other.GetComponent<Fighter>());
+                Pickup(other.gameObject);
             }
             else
             {
@@ -25,9 +27,16 @@ namespace Combat
             }
         }
 
-        private void Pickup(Fighter fighter)
+        private void Pickup(GameObject itemToPickup)
         {
-            fighter.EquipWeapon(weaponConfig);
+            if (weaponConfig != null)
+            {
+                itemToPickup.GetComponent<Fighter>().EquipWeapon(weaponConfig);
+            }
+            if (healthRestore > 0)
+            {
+                itemToPickup.GetComponent<Health>().Heal(healthRestore);
+            }
             StartCoroutine(HideForSeconds(hideTime));
         }
 
@@ -72,7 +81,7 @@ namespace Combat
             Fighter fighter = callingController.GetComponent<Fighter>();
             if (fighter.GetWeapon() != weaponConfig)
             {
-                Pickup(fighter);
+                Pickup(callingController.gameObject);
             }
             else
             {
