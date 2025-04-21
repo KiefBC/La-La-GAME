@@ -51,13 +51,21 @@ namespace Attributes
             }
         }
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(GameObject instigator,float damage)
         {
             healthPoints = Mathf.Max(healthPoints - damage, 0);
             if (healthPoints <= 0)
             {
                 Die();
+                AwardExperience(instigator);
             }
+        }
+
+        private void AwardExperience(GameObject instigator)
+        {
+            Experience xp = instigator.GetComponent<Experience>();
+            if (xp == null) return;
+            xp.GainExperience(GetComponent<BaseStats>().GetExperienceReward());
         }
 
         public float GetHealthPercentage()
