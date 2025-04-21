@@ -91,6 +91,7 @@ namespace Control
 
         private bool InteractWithUI()
         {
+            // if (EventSystem.current == null) return false;
             if (!EventSystem.current.IsPointerOverGameObject()) return false;
             SetCursorState(CursorState.UI);
             return true;
