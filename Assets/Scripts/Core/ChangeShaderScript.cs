@@ -1,6 +1,12 @@
 using UnityEditor;
 using UnityEngine;
 
+/*
+ * MADE THIS TO MASS CHANGE SHADERS IN THE SCENE
+ * IF THE PREFABS USED LEGACY  SHADERS
+ * HAS NO IMPACT ON GAME
+ */
+
 namespace Core
 {
     public class ChangeShaderScript : EditorWindow

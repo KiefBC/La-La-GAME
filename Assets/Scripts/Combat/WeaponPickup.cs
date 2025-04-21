@@ -1,12 +1,13 @@
 using System.Collections;
 using Control;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Combat
 {
     public class WeaponPickup : MonoBehaviour, IRayCastable
     {
-        [SerializeField] private Weapon weapon = null;
+        [FormerlySerializedAs("weapon")] [SerializeField] private WeaponConfig weaponConfig = null;
         [SerializeField] private float hideTime = 5f;
         [SerializeField] private float pickupRange = 2f;
         
@@ -14,7 +15,7 @@ namespace Combat
         {
             if (!other.CompareTag("Player")) return;
             
-            if (other.GetComponent<Fighter>().GetWeapon() != weapon)
+            if (other.GetComponent<Fighter>().GetWeapon() != weaponConfig)
             {
                 Pickup(other.GetComponent<Fighter>());
             }
@@ -26,7 +27,7 @@ namespace Combat
 
         private void Pickup(Fighter fighter)
         {
-            fighter.EquipWeapon(weapon);
+            fighter.EquipWeapon(weaponConfig);
             StartCoroutine(HideForSeconds(hideTime));
         }
 
@@ -69,7 +70,7 @@ namespace Combat
             if (!(distanceToWeapon <= pickupRange)) return false;
             if (!Input.GetMouseButton(0)) return true;
             Fighter fighter = callingController.GetComponent<Fighter>();
-            if (fighter.GetWeapon() != weapon)
+            if (fighter.GetWeapon() != weaponConfig)
             {
                 Pickup(fighter);
             }

@@ -179,7 +179,7 @@ MonoBehaviour:
   timeBetweenAttacks: 1
   rightHandTransform: {fileID: 0}
   leftHandTransform: {fileID: 0}
-  defaultWeapon: {fileID: 0}
+  defaultWeaponConfig: {fileID: 0}
 --- !u!114 &63520528371226746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -475,8 +475,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: af6b3c800976f4937b444d4009215e9a, type: 3}
-  m_Resource: {fileID: 8300000, guid: af6b3c800976f4937b444d4009215e9a, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 245824a775a5843eb968b37a0540837f, type: 3}
+  m_Resource: {fileID: 8300000, guid: 245824a775a5843eb968b37a0540837f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
