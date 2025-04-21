@@ -7,9 +7,26 @@ namespace Control
 {
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] CursorMapping[] cursorMappings = null;
+        
         private Mover _mover;
         private Fighter _fighter;
         private Health _health;
+        
+        public enum CursorState
+        {
+            Combat,
+            Movement,
+            None
+        }
+
+        [System.Serializable]
+        public struct CursorMapping
+        {
+            public CursorState state;
+            public Texture2D texture;
+            public Vector2 hotspot;
+        }
 
         void Awake()
         {
@@ -42,6 +59,7 @@ namespace Control
             if (_health.IsDead) return;
             if (InteractWithCombat()) return;
             if (InteractWithMovement()) return;
+            SetCursorState(CursorState.None);
         }
 
         private bool InteractWithCombat()
@@ -58,11 +76,31 @@ namespace Control
                 {
                     _fighter.Attack(target.gameObject);
                 }
+                SetCursorState(CursorState.Combat);
                 return true;
             }
             return false;
         }
+
+        private void SetCursorState(CursorState state)
+        {
+            CursorMapping mapping = GetCursorMapping(state);
+            Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
+        }
         
+        private CursorMapping GetCursorMapping(CursorState state)
+        {
+            foreach (CursorMapping mapping in cursorMappings)
+            {
+                if (mapping.state == state)
+                {
+                    return mapping;
+                }
+            }
+
+            return cursorMappings[0];
+        }
+
         private bool InteractWithMovement()
         {
             bool hasHit = Physics.Raycast(GetMouseRay(), out var hit);
@@ -72,6 +110,7 @@ namespace Control
                 {
                     _mover.StartMoveAction(hit.point, 1f);
                 }
+                SetCursorState(CursorState.Movement);
                 return true;
             }
             return false;
