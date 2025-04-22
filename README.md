@@ -4,6 +4,8 @@ A Unity-based RPG game with combat, experience, and save systems.
 
 NOTE: Textures not included.
 
+It has the added benefit of Auto-Targetting and Auto-Movement for combat, and each Entity has been given a unique ID via the JSON Saving system, so everything is tracked to the most minute detail such a Position and Health. Full of Royalty free Music and sound effects!
+
 ## Core Features
 
 ### Combat System
