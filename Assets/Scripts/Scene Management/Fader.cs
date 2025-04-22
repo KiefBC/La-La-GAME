@@ -6,6 +6,7 @@ namespace Scene_Management
     public class Fader : MonoBehaviour
     {
         private CanvasGroup _canvasGroup;
+        private Coroutine _currentActiveFade;
         
         private void Awake()
         {
@@ -14,8 +15,6 @@ namespace Scene_Management
             {
                 Debug.LogError($"Missing CanvasGroup component on {gameObject.name}");
             }
-
-            // _canvasGroup.alpha = 0;
         }
         
         public void FadeOutImmediate()
@@ -25,20 +24,31 @@ namespace Scene_Management
 
         public IEnumerator FadeOut(float time)
         {
-            while (_canvasGroup.alpha < 1)
+            return Fade(1, time);
+        }
+
+        public IEnumerator Fade(float target, float time)
+        {
+            if (_currentActiveFade != null)
             {
-                _canvasGroup.alpha += Time.deltaTime / time;
+                StopCoroutine(_currentActiveFade);
+            }
+            _currentActiveFade = StartCoroutine(FadeRoutine(target, time));
+            yield return _currentActiveFade;
+        }
+
+        private IEnumerator FadeRoutine(float target, float time)
+        {
+            while (!Mathf.Approximately(_canvasGroup.alpha, target))
+            {
+                _canvasGroup.alpha = Mathf.MoveTowards(_canvasGroup.alpha, target, Time.deltaTime / time);
                 yield return null;
             }
         }
-        
+
         public IEnumerator FadeIn(float time)
         {
-            while (_canvasGroup.alpha > 0)
-            {
-                _canvasGroup.alpha -= Time.deltaTime / time;
-                yield return null;
-            }
+            return Fade(0, time);
         }
     }
 }

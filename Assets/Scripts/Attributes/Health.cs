@@ -1,10 +1,10 @@
-using System;
 using Core;
 using Core.Saving;
 using Newtonsoft.Json.Linq;
 using Stats;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 namespace Attributes
 {
@@ -12,8 +12,10 @@ namespace Attributes
     {
         private static readonly int Die1 = Animator.StringToHash("die");
         [SerializeField] private float regenerationPercentage = 70f;
+        [SerializeField] private UnityEvent<float> takeDamageEvent;
+        [SerializeField] private UnityEvent dieEvent;
         
-        private float _healthPoints = -1f;
+        private float _healthPoints = -1f; // Cause error if not set
         
         private Animator _animator;
         private bool _isDead = false;
@@ -82,12 +84,16 @@ namespace Attributes
 
         public void TakeDamage(GameObject instigator,float damage)
         {
-            Debug.Log("DEBUG :: " + gameObject.name + " took " + damage + " damage");
             _healthPoints = Mathf.Max(_healthPoints - damage, 0);
             if (_healthPoints <= 0)
             {
+                dieEvent.Invoke();
                 Die();
                 AwardExperience(instigator);
+            }
+            else
+            {
+                takeDamageEvent.Invoke(damage);
             }
         }
 
@@ -96,11 +102,6 @@ namespace Attributes
             Experience xp = instigator.GetComponent<Experience>();
             if (xp == null) return;
             xp.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
-        }
-
-        public float GetHealthPercentage()
-        {
-            return 100 * (_healthPoints / GetComponent<BaseStats>().GetStat(Stat.Health));
         }
 
         private void Die()
@@ -149,6 +150,12 @@ namespace Attributes
             {
                 Die();
             }
+        }
+
+        public void Heal(float healthRestore)
+        {
+            if (_healthPoints <= 0) return;
+            _healthPoints = Mathf.Min(_healthPoints + healthRestore, GetMaxHealthPoints());
         }
     }
 }
