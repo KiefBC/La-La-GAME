@@ -76,7 +76,7 @@ namespace Combat
         {
             float distanceToWeapon = Vector3.Distance(callingController.transform.position, transform.position);
 
-            if (!(distanceToWeapon <= pickupRange)) return false;
+            if (!(distanceToWeapon < pickupRange)) return false;
             if (!Input.GetMouseButton(0)) return true;
             Fighter fighter = callingController.GetComponent<Fighter>();
             if (fighter.GetWeapon() != weaponConfig)
