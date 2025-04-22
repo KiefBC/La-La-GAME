@@ -7,7 +7,7 @@ NOTE: Textures not included.
 It has the added benefit of Auto-Targetting and Auto-Movement for combat, and each Entity has been given a unique ID via the JSON Saving system, so everything is tracked to the most minute detail such a Position and Health. Full of Royalty free Music and sound effects!
 
 <p align="center">
-  <img src="example.gif" alt="La La Gameplay">
+  <img src="Example.gif" alt="La La Gameplay">
 </p>
 
 ## Core Features
