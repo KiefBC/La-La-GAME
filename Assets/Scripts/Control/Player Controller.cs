@@ -10,10 +10,15 @@ namespace Control
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] CursorMapping[] cursorMappings = null;
+        [SerializeField] float autoTargetRange = 8f; // Range to detect enemies
+        [SerializeField] LayerMask enemyLayers; // Layer mask for enemies
+        [SerializeField] bool autoTargetEnabled = true; // Toggle for auto-targeting
         
         private Mover _mover;
         private Fighter _fighter;
         private Health _health;
+        private float _autoTargetUpdateRate = 0.2f; // How often to check for targets
+        private float _lastAutoTargetTime;
 
         [Serializable]
         public struct CursorMapping
@@ -56,10 +61,53 @@ namespace Control
             {
                 SetCursorState(CursorState.None);
                 return;
-            };
+            }
+
+            if (autoTargetEnabled)
+            {
+                AutoTargetUpdate();
+            }
+            
             if (InteractWithComponent()) return;
             if (InteractWithMovement()) return;
             SetCursorState(CursorState.None);
+        }
+
+        private void AutoTargetUpdate()
+        {
+            // Only update periodically to save performance
+            if (Time.time - _lastAutoTargetTime < _autoTargetUpdateRate) return;
+            _lastAutoTargetTime = Time.time;
+
+            // If already has a valid target, don't search for new one
+            if (_fighter.GetTarget() != null && !_fighter.GetTarget().IsDead) return;
+
+            // Find nearest enemy
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, autoTargetRange, enemyLayers);
+            
+            float closestDistance = Mathf.Infinity;
+            GameObject closestEnemy = null;
+
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.gameObject == gameObject) continue; // Skip self
+                
+                Health targetHealth = hitCollider.GetComponent<Health>();
+                if (targetHealth == null || targetHealth.IsDead) continue;
+                
+                float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
+                if (distance < closestDistance && _fighter.CanAttack(hitCollider.gameObject))
+                {
+                    closestDistance = distance;
+                    closestEnemy = hitCollider.gameObject;
+                }
+            }
+
+            // Attack closest enemy if found
+            if (closestEnemy != null)
+            {
+                _fighter.Attack(closestEnemy);
+            }
         }
 
         private bool InteractWithComponent()
