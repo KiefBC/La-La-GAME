@@ -218,6 +218,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1581565244606904952}
     - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
+      propertyPath: defaultWeaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 492ee0f7f3bcb4e76b0a9e1dbeac7a2e, type: 2}
+    - target: {fileID: 6316003831960963302, guid: f4dc1adee68154579a1a0f0854d9d943, type: 3}
       propertyPath: onHit.m_PersistentCalls.m_Calls.Array.size
       value: 0
       objectReference: {fileID: 0}
