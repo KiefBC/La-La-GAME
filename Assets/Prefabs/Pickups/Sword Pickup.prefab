@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: weapon
       value: 
       objectReference: {fileID: 11400000, guid: 65b06cbcc2d034131b1c481f0aa9af72, type: 2}
+    - target: {fileID: 8629327993074596053, guid: 11a5a1fb06e90474fa0b713fe94ac21f, type: 3}
+      propertyPath: weaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 65b06cbcc2d034131b1c481f0aa9af72, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -99,7 +103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8162661748290240575, guid: acf5ad0efdcb44636a9f6fae5bf3a4b1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8162661748290240575, guid: acf5ad0efdcb44636a9f6fae5bf3a4b1, type: 3}
       propertyPath: m_LocalPosition.z
