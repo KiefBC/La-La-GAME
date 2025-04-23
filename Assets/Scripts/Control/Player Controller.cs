@@ -56,6 +56,8 @@ namespace Control
 
         void Update()
         {
+            if (Time.timeScale == 0f) return; // Skip input handling when game is paused
+            
             if (InteractWithUI()) return;
             if (_health.IsDead)
             {
@@ -145,7 +147,7 @@ namespace Control
             return true;
         }
 
-        private void SetCursorState(CursorState state)
+        public void SetCursorState(CursorState state)
         {
             CursorMapping mapping = GetCursorMapping(state);
             Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
