@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2870257404610148551
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 235520548842435231, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_Height
+      value: 1.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 235520548842435231, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_Radius
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 235520548842435231, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_Center.y
+      value: 0.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 1632065008018644244, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_Name
+      value: Enemy Boss Ranged
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.20214495
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9793557
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 156.675
+      objectReference: {fileID: 0}
+    - target: {fileID: 3706083048467580920, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6471211483616689860, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: chaseDistance
+      value: 19.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7160267413696757493, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}
+      propertyPath: defaultWeaponConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: ab14090d22305455fa175c1f504c5cd6, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2d28e56a528c74f559665970bdff00cc, type: 3}

@@ -72,6 +72,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5474368803548864605, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
+      propertyPath: chaseDistance
+      value: 8.64
+      objectReference: {fileID: 0}
     - target: {fileID: 8172028520861999212, guid: 2688cbc4ba19a4f44b3eff2be202159c, type: 3}
       propertyPath: defaultWeaponConfig
       value: 
