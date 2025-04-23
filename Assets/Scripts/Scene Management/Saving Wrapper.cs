@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using Core.Saving;
 
@@ -8,20 +9,33 @@ namespace Scene_Management
     {
         private const string SaveFileName = "sav";
         [SerializeField] private float fadeInTime = 1f;
+        private JsonSavingSystem _savingSystem;
 
         private void Awake()
         {
+            _savingSystem = GetComponent<JsonSavingSystem>();
             StartCoroutine(LoadLastScene());
         }
 
         private IEnumerator LoadLastScene()
         {
-            yield return GetComponent<JsonSavingSystem>().LoadLastScene(SaveFileName);
+            yield return _savingSystem.LoadLastScene(SaveFileName);
             Fader fader = FindAnyObjectByType<Fader>();
             fader.FadeOutImmediate();
             yield return fader.FadeIn(fadeInTime);
+            
+            // Create initial save point only if no save exists
+            if (!HasExistingSave())
+            {
+                Save();
+            }
         }
-        
+
+        private bool HasExistingSave()
+        {
+            return _savingSystem.ListSaves().Any(save => save == SaveFileName);
+        }
+
         void Update()
         {
             if (Input.GetKeyDown(KeyCode.L))
@@ -40,17 +54,17 @@ namespace Scene_Management
 
         private void Delete()
         {
-            GetComponent<JsonSavingSystem>().Delete(SaveFileName);
+            _savingSystem.Delete(SaveFileName);
         }
 
         public void Load()
         {
-            GetComponent<JsonSavingSystem>().Load(SaveFileName);
+            _savingSystem.Load(SaveFileName);
         }
         
         public void Save()
         {
-            GetComponent<JsonSavingSystem>().Save(SaveFileName);
+            _savingSystem.Save(SaveFileName);
         }
     }
 }

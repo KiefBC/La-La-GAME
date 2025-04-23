@@ -2,7 +2,6 @@ using System.Collections;
 using Attributes;
 using Control;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Combat
 {

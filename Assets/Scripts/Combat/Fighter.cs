@@ -7,6 +7,7 @@ using UnityEngine;
 using Movement;
 using Newtonsoft.Json.Linq;
 using Stats;
+using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 namespace Combat
@@ -18,7 +19,9 @@ namespace Combat
         [SerializeField] Transform rightHandTransform = null;
         [SerializeField] Transform leftHandTransform = null;
         [SerializeField] private WeaponConfig defaultWeaponConfig = null;
-        
+        [SerializeField] private UnityEvent meleeHitEvent;
+        [SerializeField] private GameObject hitEffect = null;
+
         private Health _target;
         private Mover _mover;
         private ActionScheduler _actionScheduler;
@@ -115,7 +118,20 @@ namespace Combat
             }
             else
             {
+                meleeHitEvent.Invoke();
                 _target.TakeDamage(gameObject, damage);
+                
+                // Spawn hit effect if it exists
+                if (hitEffect != null)
+                {
+                    Vector3 hitPosition = _target.transform.position;
+                    CapsuleCollider targetCollider = _target.GetComponent<CapsuleCollider>();
+                    if (targetCollider != null)
+                    {
+                        hitPosition += targetCollider.center;
+                    }
+                    Instantiate(hitEffect, hitPosition, Quaternion.identity);
+                }
             }
         }
         

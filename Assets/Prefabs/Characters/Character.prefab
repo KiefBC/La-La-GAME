@@ -180,6 +180,10 @@ MonoBehaviour:
   rightHandTransform: {fileID: 0}
   leftHandTransform: {fileID: 0}
   defaultWeaponConfig: {fileID: 0}
+  meleeHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  hitEffect: {fileID: 813914505437901998, guid: 26c4c07d0f86849048820092d2e3dbe4, type: 3}
 --- !u!114 &63520528371226746
 MonoBehaviour:
   m_ObjectHideFlags: 0

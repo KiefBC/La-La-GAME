@@ -22,12 +22,17 @@ namespace Attributes
         private CapsuleCollider _capsuleCollider;
         private NavMeshAgent _navMeshAgent;
         private ActionScheduler _scheduler;
-        
+        private GameOverController _gameOverController;
+
         public bool IsDead => _isDead;
 
         private void Awake()
         {
             InitializeComponents();
+            if (CompareTag("Player"))
+            {
+                _gameOverController = FindAnyObjectByType<GameOverController>();
+            }
         }
 
         private void Start()
@@ -111,6 +116,11 @@ namespace Attributes
             _isDead = true;
             _animator.SetTrigger(Die1);
             _scheduler.CancelCurrentAction();
+            
+            if (CompareTag("Player") && _gameOverController != null)
+            {
+                _gameOverController.ShowGameOver();
+            }
         }
 
         private void OnEnable()
