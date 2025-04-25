@@ -7,6 +7,10 @@ using Newtonsoft.Json.Linq;
 
 namespace Movement
 {
+    /// <summary>
+    /// Handles character movement using Unity's NavMeshAgent component.
+    /// Implements action scheduling and state saving/loading functionality.
+    /// </summary>
     public class Mover : MonoBehaviour, IAction, IJsonSaveable
     {
         private static readonly int ForwardSpeed = Animator.StringToHash("forwardSpeed");
@@ -18,11 +22,17 @@ namespace Movement
         private ActionScheduler _scheduler;
         private Health _health;
 
+        /// <summary>
+        /// Initializes required components on object creation.
+        /// </summary>
         private void Awake()
         {
             InitializeComponents();
         }
 
+        /// <summary>
+        /// Gets and validates all required components, logging errors if any are missing.
+        /// </summary>
         private void InitializeComponents()
         {
             _agent = GetComponent<NavMeshAgent>();
@@ -50,6 +60,10 @@ namespace Movement
             }
         }
 
+        /// <summary>
+        /// Updates the NavMeshAgent state and animation parameters each frame.
+        /// Disables navigation when character is dead.
+        /// </summary>
         void Update()
         {
             _agent.enabled = !_health.IsDead;
@@ -58,17 +72,20 @@ namespace Movement
         }
 
         /// <summary>
-        /// Moves the object to the specified world position using the NavMeshAgent component.
+        /// Moves the character to a specified destination using NavMeshAgent.
         /// </summary>
-        /// <param name="destination">The target position to move the object to.</param>
-        /// <param name="speedFraction"></param>
+        /// <param name="destination">Target world position to move to</param>
+        /// <param name="speedFraction">Movement speed as a fraction of maximum speed (0-1)</param>
         public void MoveTo(Vector3 destination, float speedFraction)
         {
             _agent.destination = destination;
-            _agent.speed = maxSpeed * Mathf.Clamp01(speedFraction); // Clamp the speed to the range [0, 1]
+            _agent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             _agent.isStopped = false;
         }
 
+        /// <summary>
+        /// Updates the animator's forward speed parameter based on current velocity.
+        /// </summary>
         private void UpdateAnimator()
         {
             Vector3 velocity = _agent.velocity;
@@ -77,22 +94,42 @@ namespace Movement
             _animator.SetFloat(ForwardSpeed, speed);
         }
 
+        /// <summary>
+        /// Stops the current movement action.
+        /// Implements IAction interface.
+        /// </summary>
         public void Cancel()
         {
             _agent.isStopped = true;
         }
         
+        /// <summary>
+        /// Initiates a new movement action with specified parameters.
+        /// </summary>
+        /// <param name="destination">Target world position to move to</param>
+        /// <param name="speedFraction">Movement speed as a fraction of maximum speed (0-1)</param>
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
             _scheduler.StartAction(this);
             MoveTo(destination, speedFraction);
         }
 
+        /// <summary>
+        /// Captures the current position for saving.
+        /// Implements IJsonSaveable interface.
+        /// </summary>
+        /// <returns>JToken containing serialized position data</returns>
         public JToken CaptureAsJToken()
         {
             return transform.position.ToToken();
         }
 
+        /// <summary>
+        /// Restores the position from saved data.
+        /// Temporarily disables NavMeshAgent during position update to prevent conflicts.
+        /// Implements IJsonSaveable interface.
+        /// </summary>
+        /// <param name="state">JToken containing serialized position data</param>
         public void RestoreFromJToken(JToken state)
         {
             GetComponent<NavMeshAgent>().enabled = false;

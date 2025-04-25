@@ -6,6 +6,10 @@ using Movement;
 
 namespace Control
 {
+    /// <summary>
+    /// Controls AI behavior including patrolling, combat, and state management.
+    /// Handles transitions between different AI states and their corresponding behaviors.
+    /// </summary>
     public class AIController : MonoBehaviour
     {
         [SerializeField] private float chaseDistance = 10f;
@@ -15,7 +19,7 @@ namespace Control
         [SerializeField] float waypointDwellTime = 2f;
         
         [Range(0, 1)]
-        [SerializeField] private float patrolSpeedFraction = 0.1f; // Fraction of max walking speed to use when patrolling (30% of 1)
+        [SerializeField] private float patrolSpeedFraction = 0.1f;
 
         private GameObject _player;
         private Fighter _fighter;
@@ -37,16 +41,26 @@ namespace Control
             Attack
         }
 
+        /// <summary>
+        /// Initializes the AI controller by setting up required component references.
+        /// </summary>
         private void Awake()
         {
             InitializeComponents();
         }
         
+        /// <summary>
+        /// Sets the initial state of the AI to patrol mode.
+        /// </summary>
         private void Start()
         {
             _currentState = AIState.Patrol;
         }
 
+        /// <summary>
+        /// Initializes and validates all required component references.
+        /// Logs errors if any required components are missing.
+        /// </summary>
         private void InitializeComponents()
         {
             _player = GameObject.FindWithTag("Player");
@@ -82,6 +96,9 @@ namespace Control
             _guardLocation = transform.position;
         }
 
+        /// <summary>
+        /// Updates the AI's behavior each frame, handling state transitions and actions.
+        /// </summary>
         private void Update()
         {
             if (_health.IsDead) return;
@@ -91,11 +108,19 @@ namespace Control
             UpdateTimers();
         }
         
+        /// <summary>
+        /// Generates a random dwell time for waypoint pauses.
+        /// </summary>
+        /// <returns>A randomized dwell time based on the configured waypointDwellTime</returns>
         private float GetRandomDwellTime()
         {
             return waypointDwellTime + UnityEngine.Random.Range(-waypointDwellTime / 2, waypointDwellTime / 2);
         }
 
+        /// <summary>
+        /// Updates the AI's current state based on conditions and transitions.
+        /// Handles state changes between Patrol, Suspicious, and Attack states.
+        /// </summary>
         private void UpdateState()
         {
             AIState newState = _currentState;
@@ -137,6 +162,9 @@ namespace Control
             }
         }
 
+        /// <summary>
+        /// Updates the AI's behavior based on its current state.
+        /// </summary>
         private void UpdateBehaviour()
         {
             switch (_currentState)
@@ -153,12 +181,16 @@ namespace Control
             }
         }
 
+        /// <summary>
+        /// Handles state entry actions for each AI state.
+        /// </summary>
+        /// <param name="state">The state being entered</param>
         private void OnStateEnter(AIState state)
         {
             switch (state)
             {
                 case AIState.Patrol:
-                    _timeSinceArrivedAtWayPoint = Mathf.Infinity; // Force immediate movement
+                    _timeSinceArrivedAtWayPoint = Mathf.Infinity;
                     break;
                 case AIState.Suspicious:
                     _mover.Cancel();
@@ -170,6 +202,10 @@ namespace Control
             }
         }
 
+        /// <summary>
+        /// Handles state exit actions for each AI state.
+        /// </summary>
+        /// <param name="state">The state being exited</param>
         private void OnStateExit(AIState state)
         {
             switch (state)
@@ -180,12 +216,18 @@ namespace Control
             }
         }
 
+        /// <summary>
+        /// Updates the timers used for state transitions and behavior timing.
+        /// </summary>
         private void UpdateTimers()
         {
             _timeSinceLastSawPlayer += Time.deltaTime;
             _timeSinceArrivedAtWayPoint += Time.deltaTime;
         }
 
+        /// <summary>
+        /// Handles the patrol behavior, including waypoint navigation and guard position returns.
+        /// </summary>
         private void PatrolBehaviour()
         {
             Vector3 nextPosition = _guardLocation;
@@ -205,34 +247,55 @@ namespace Control
             }
         }
 
+        /// <summary>
+        /// Gets the current waypoint position from the patrol path.
+        /// </summary>
+        /// <returns>The position of the current waypoint</returns>
         private Vector3 GetCurrentWayPoint()
         {
             return patrolPath.GetWayPoint(_currentWayPointIndex);
         }
 
+        /// <summary>
+        /// Advances to the next waypoint in the patrol path.
+        /// </summary>
         private void CycleWayPoints()
         {
             _currentWayPointIndex = patrolPath.GetNextIndex(_currentWayPointIndex);
         }
 
+        /// <summary>
+        /// Checks if the AI has reached the current waypoint.
+        /// </summary>
+        /// <returns>True if within waypoint tolerance, false otherwise</returns>
         private bool AtWayPoint()
         {
             float distanceToWayPoint = Vector3.Distance(transform.position, GetCurrentWayPoint());
             return distanceToWayPoint < wayPointTolerance;
         }
 
+        /// <summary>
+        /// Handles the suspicious behavior state, canceling current actions.
+        /// </summary>
         private void SuspicionBehaviour()
         {
             _mover.Cancel();
             _actionScheduler.CancelCurrentAction();
         }
 
+        /// <summary>
+        /// Handles the attack behavior state, updating player tracking time.
+        /// </summary>
         private void AttackBehaviour()
         {
             _timeSinceLastSawPlayer = 0;
             _fighter.Attack(_player);
         }
 
+        /// <summary>
+        /// Checks if the player is within attack range.
+        /// </summary>
+        /// <returns>True if player is within chase distance, false otherwise</returns>
         private bool InAttackRangeOfPlayer()
         {
             float distanceToPlayer = Vector3.Distance(_player.transform.position, transform.position);

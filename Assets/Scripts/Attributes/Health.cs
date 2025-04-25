@@ -8,6 +8,10 @@ using UnityEngine.Events;
 
 namespace Attributes
 {
+    /// <summary>
+    /// Manages entity health, including damage handling, death state, health regeneration,
+    /// and save/load functionality. Supports both player and non-player entities.
+    /// </summary>
     public class Health : MonoBehaviour, IJsonSaveable
     {
         private static readonly int Die1 = Animator.StringToHash("die");
@@ -24,8 +28,14 @@ namespace Attributes
         private ActionScheduler _scheduler;
         private GameOverController _gameOverController;
 
+        /// <summary>
+        /// Gets whether the entity is currently dead.
+        /// </summary>
         public bool IsDead => _isDead;
 
+        /// <summary>
+        /// Initializes required components and sets up the game over controller for player entities.
+        /// </summary>
         private void Awake()
         {
             InitializeComponents();
@@ -35,6 +45,9 @@ namespace Attributes
             }
         }
 
+        /// <summary>
+        /// Sets up level-up event handling and initializes health points if not already set.
+        /// </summary>
         private void Start()
         {
             GetComponent<BaseStats>().OnLevelUp += RegenerateHealth;
@@ -44,12 +57,20 @@ namespace Attributes
             }
         }
 
+        /// <summary>
+        /// Regenerates health based on the entity's maximum health and regeneration percentage.
+        /// Called when the entity levels up.
+        /// </summary>
         private void RegenerateHealth()
         {
             float regenHealthPoints = GetComponent<BaseStats>().GetStat(Stat.Health) * regenerationPercentage / 100;
             _healthPoints = Mathf.Max(_healthPoints, regenHealthPoints);
         }
 
+        /// <summary>
+        /// Initializes and validates required components for health functionality.
+        /// Logs errors if required components are missing.
+        /// </summary>
         private void InitializeComponents()
         {
             _animator = GetComponent<Animator>();
@@ -77,17 +98,30 @@ namespace Attributes
             }
         }
         
+        /// <summary>
+        /// Returns the current health points of the entity.
+        /// </summary>
+        /// <returns>Current health points</returns>
         public float GetHealthPoints()
         {
             return _healthPoints;
         }
         
+        /// <summary>
+        /// Returns the maximum possible health points for the entity.
+        /// </summary>
+        /// <returns>Maximum health points based on stats</returns>
         public float GetMaxHealthPoints()
         {
             return GetComponent<BaseStats>().GetStat(Stat.Health);
         }
 
-        public void TakeDamage(GameObject instigator,float damage)
+        /// <summary>
+        /// Handles damage taken by the entity, including death processing and experience rewards.
+        /// </summary>
+        /// <param name="instigator">The GameObject that caused the damage</param>
+        /// <param name="damage">Amount of damage to apply</param>
+        public void TakeDamage(GameObject instigator, float damage)
         {
             _healthPoints = Mathf.Max(_healthPoints - damage, 0);
             if (_healthPoints <= 0)
@@ -102,6 +136,10 @@ namespace Attributes
             }
         }
 
+        /// <summary>
+        /// Awards experience to the instigator when this entity dies.
+        /// </summary>
+        /// <param name="instigator">The GameObject to receive experience</param>
         private void AwardExperience(GameObject instigator)
         {
             Experience xp = instigator.GetComponent<Experience>();
@@ -109,6 +147,9 @@ namespace Attributes
             xp.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward));
         }
 
+        /// <summary>
+        /// Processes entity death, including animation triggers and game over handling for player entities.
+        /// </summary>
         private void Die()
         {
             if (_isDead) return;
@@ -123,6 +164,9 @@ namespace Attributes
             }
         }
 
+        /// <summary>
+        /// Handles component enabling based on death state.
+        /// </summary>
         private void OnEnable()
         {
             if (_capsuleCollider != null)
@@ -135,6 +179,9 @@ namespace Attributes
             }
         }
         
+        /// <summary>
+        /// Handles component disabling based on death state.
+        /// </summary>
         private void OnDisable()
         {
             if (_capsuleCollider != null)
@@ -147,11 +194,19 @@ namespace Attributes
             }
         }
 
+        /// <summary>
+        /// Implements IJsonSaveable to capture current health state.
+        /// </summary>
+        /// <returns>JToken containing health points</returns>
         public JToken CaptureAsJToken()
         {
             return JToken.FromObject(_healthPoints);
         }
 
+        /// <summary>
+        /// Implements IJsonSaveable to restore health state from saved data.
+        /// </summary>
+        /// <param name="state">JToken containing saved health points</param>
         public void RestoreFromJToken(JToken state)
         {
             _healthPoints = state.ToObject<float>();
@@ -162,6 +217,11 @@ namespace Attributes
             }
         }
 
+        /// <summary>
+        /// Heals the entity by the specified amount, up to maximum health.
+        /// Only works if the entity is not dead.
+        /// </summary>
+        /// <param name="healthRestore">Amount of health to restore</param>
         public void Heal(float healthRestore)
         {
             if (_healthPoints <= 0) return;
